@@ -1,0 +1,81 @@
+[
+  {
+    "id": "serverless-dashboard",
+    "title": "AWS Serverless Cost Intelligence Dashboard",
+    "subtitle": "Real-time cloud cost insights with Lambda, API Gateway, and DynamoDB",
+    "description": "Advanced cost tracking dashboard that monitors real-time AWS Lambda, API Gateway, and DynamoDB costs with forecasting, alert rules, and user authentication.",
+    "longDescription": "A comprehensive serverless cost intelligence platform built with AWS Lambda, API Gateway, and DynamoDB. Features include real-time cost monitoring, predictive forecasting using machine learning, customizable alert rules, user authentication via Auth0, and interactive visualizations with Chart.js. The dashboard provides actionable insights for cost optimization and budget management across serverless architectures.",
+    "techStack": ["AWS", "Lambda", "API Gateway", "DynamoDB", "Chart.js", "Tailwind"],
+    "github": "https://github.com/iamruwainkelly/aws-serverless-cost-dashboard",
+    "liveDemo": "/aws-calculator",
+    "category": ["Cloud", "Monitoring"],
+    "technologies": ["AWS Lambda", "API Gateway", "DynamoDB", "Chart.js", "Auth0", "Tailwind CSS"],
+    "icon": "chart-pie",
+    "featured": true,
+    "mockData": {
+      "costSavings": "$23,450",
+      "monitored": "156 functions",
+      "alerts": "24 active",
+      "accuracy": "94.7%"
+    },
+    "charts": {
+      "costByService": {
+        "labels": ["Lambda", "API Gateway", "DynamoDB", "CloudWatch"],
+        "data": [45, 25, 20, 10]
+      },
+      "monthlyUsage": {
+        "labels": ["Jan", "Feb", "Mar", "Apr", "May"],
+        "data": [1200, 1450, 1300, 1800, 1650]
+      },
+      "costTrend": {
+        "labels": ["Week 1", "Week 2", "Week 3", "Week 4"],
+        "data": [320, 280, 390, 450]
+      }
+    }
+  },
+  {
+    "id": "terraform-aws-suite",
+    "title": "Terraform AWS VPC, ECS, RDS Suite",
+    "subtitle": "Modular, production-grade Terraform setup for scalable AWS infrastructure",
+    "description": "Complete Infrastructure-as-Code solution with modular Terraform templates for VPC, ECS, RDS, and CI/CD pipelines. Production-hardened and registry-ready.",
+    "longDescription": "A comprehensive Terraform-based infrastructure suite designed for enterprise-scale AWS deployments. Includes modular templates for VPC networking, ECS container orchestration, RDS database management, and automated CI/CD pipelines. Features include cost estimation, security best practices, monitoring with CloudWatch, and automated scaling policies. All modules are production-tested and Terraform Registry ready.",
+    "techStack": ["Terraform", "AWS", "ECS", "RDS", "VPC", "CI/CD", "CloudWatch"],
+    "github": "https://github.com/iamruwainkelly/terraform-aws-vpc-ecs-rds-suite",
+    "caseStudy": "/case-study",
+    "category": ["Infrastructure", "DevOps"],
+    "technologies": ["Terraform", "AWS", "ECS", "RDS", "VPC", "CloudWatch", "GitHub Actions"],
+    "icon": "cube",
+    "featured": true,
+    "mockData": {
+      "modules": "12 production",
+      "deployments": "89 successful",
+      "uptime": "99.98%",
+      "costOptimized": "34%"
+    },
+    "architecture": {
+      "components": ["VPC", "ECS Cluster", "RDS Instance", "Load Balancer", "Auto Scaling", "CloudWatch"],
+      "regions": 3,
+      "environments": ["dev", "staging", "prod"]
+    }
+  },
+  {
+    "id": "aws-cost-calculator",
+    "title": "AWS Cost Calculator",
+    "subtitle": "Real-time AWS cost estimation and optimization",
+    "description": "Advanced cost calculation tool for AWS services with dynamic pricing and optimization recommendations.",
+    "longDescription": "An intelligent AWS cost calculator that provides real-time pricing estimates across multiple regions and services. Features include cost optimization recommendations, budget alerts, and detailed breakdown analysis for EC2, RDS, S3, and other AWS services.",
+    "techStack": ["Vue.js", "Chart.js", "AWS API", "Node.js"],
+    "github": "https://github.com/iamruwainkelly/aws-cost-calculator",
+    "liveDemo": "/aws-calculator",
+    "category": ["Tools"],
+    "technologies": ["Vue.js", "Chart.js", "AWS Pricing API", "Node.js"],
+    "icon": "calculator",
+    "featured": true,
+    "mockData": {
+      "calculations": 1250,
+      "savings": "$15,000",
+      "users": 89,
+      "accuracy": "94%"
+    }
+  }
+]
