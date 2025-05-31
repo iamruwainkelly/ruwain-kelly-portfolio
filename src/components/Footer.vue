@@ -1,120 +1,43 @@
 <template>
-  <footer class="bg-dark-bg border-t border-gray-800 mt-20">
-    <div class="container mx-auto px-4 py-12">
-      <!-- Main Footer Content -->
-      <div class="grid md:grid-cols-3 gap-8 mb-8">
-        <!-- Brand Section -->
-        <div class="space-y-4">
-          <h3 class="text-2xl font-bold gradient-text">RUWΔIN KΞLLY</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">
-            ERP • SCM • Cloud • Backend | Building intelligent systems with modern technologies
-          </p>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="space-y-4">
-          <h4 class="text-lg font-semibold text-text-primary">Quick Links</h4>
-          <nav class="flex flex-col space-y-2">
-            <router-link 
-              v-for="link in footerLinks" 
-              :key="link.name"
-              :to="link.path" 
-              class="text-text-secondary hover:text-primary-orange transition-colors duration-300 text-sm"
-            >
-              {{ link.name }}
-            </router-link>
-          </nav>
-        </div>
-
-        <!-- Contact & Social -->
-        <div class="space-y-4">
-          <h4 class="text-lg font-semibold text-text-primary">Connect</h4>
-          <div class="flex space-x-4">
-            <a 
-              v-for="social in socialLinks" 
-              :key="social.name"
-              :href="social.url" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-text-secondary hover:text-primary-orange hover:bg-gray-700 transition-all duration-300"
-              :title="social.name"
-            >
-              <component :is="social.icon" class="w-5 h-5" />
-            </a>
-          </div>
-          <div class="space-y-2 text-sm text-text-secondary">
-            <p>📧 admin@ruwainkelly.co.za</p>
-            <p>📱 +27 74 760 7776</p>
-            <p>🌍 Cape Town, South Africa</p>
-          </div>
-        </div>
+  <footer class="bg-neutral-900 text-neutral-400 text-sm px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-center md:text-left">
+      
+      <!-- Branding & Role -->
+      <div>
+        <p class="font-semibold text-white">RUWAIN KELLY</p>
+        <p class="text-xs">Ops Leader | ERP & SCM Architect | Backend & Infra Engineer</p>
+        <p class="text-xs">SAP • SAGE • SYSPRO • AWS • Python</p>
       </div>
 
-      <!-- Bottom Bar -->
-      <div class="border-t border-gray-800 pt-8">
-        <div class="text-center">
-          <p class="text-text-secondary text-sm leading-relaxed max-w-4xl mx-auto mb-4">
-            ⚡ Built by <span class="text-primary-orange font-semibold">Ruwain Kelly</span> — 
-            Ops Leader | ERP & SCM Architect | Backend & Infra Engineer | 
-            <span class="text-primary-orange">SAP • SAGE • SYSPRO • AWS • Python</span> | 
-            Serving clients across Africa and Europe
-          </p>
-          <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6 text-xs text-text-secondary">
-            <span>© {{ currentYear }} RUWΔIN KΞLLY. All rights reserved.</span>
-            <span class="hidden md:block">•</span>
-            <span>Built with Vue 3 & Tailwind CSS</span>
-            <span class="hidden md:block">•</span>
-            <span>Deployed on Vercel</span>
-          </div>
+      <!-- Links -->
+      <div class="flex flex-col items-center md:items-start gap-1">
+        <div class="flex gap-4 text-xs">
+          <router-link to="/" class="hover:text-white transition-colors duration-300">Home</router-link>
+          <router-link to="/projects" class="hover:text-white transition-colors duration-300">Projects</router-link>
+          <router-link to="/aws-calculator" class="hover:text-white transition-colors duration-300">AWS Calculator</router-link>
+          <router-link to="/terraform-demo" class="hover:text-white transition-colors duration-300">Terraform Demo</router-link>
+          <router-link to="/contact" class="hover:text-white transition-colors duration-300">Contact</router-link>
         </div>
+        <p class="text-xs mt-1">Built with Vue 3 & Tailwind CSS • Deployed on Vercel</p>
       </div>
+
+      <!-- Contact -->
+      <div class="text-xs text-center md:text-right">
+        <p>📧 <a href="mailto:admin@ruwainkelly.co.za" class="hover:text-white transition-colors duration-300">admin@ruwainkelly.co.za</a></p>
+        <p>📱 +27 74 760 7776</p>
+        <p>📍 Cape Town, South Africa</p>
+      </div>
+    </div>
+
+    <div class="mt-4 text-center text-xs text-neutral-500">
+      © {{ currentYear }} RUWAIN KELLY. All rights reserved.
     </div>
   </footer>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { 
-  EnvelopeIcon,
-  GlobeAltIcon,
-  UserIcon
-} from '@heroicons/vue/24/outline'
 
 const currentYear = computed(() => new Date().getFullYear())
-
-const footerLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'About Me', path: '/about' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'AWS Calculator', path: '/aws-calculator' },
-  { name: 'Terraform Demo', path: '/terraform-demo' },
-  { name: 'Contact', path: '/contact' }
-]
-
-const socialLinks = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com/iamruwainkelly',
-    icon: GlobeAltIcon
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/mr-r',
-    icon: UserIcon
-  },
-  {
-    name: 'Email',
-    url: 'mailto:admin@ruwainkelly.co.za',
-    icon: EnvelopeIcon
-  }
-]
 </script>
 
-<style scoped>
-.text-gradient {
-  background: linear-gradient(90deg, #ff6c00, #a678ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-</style>
