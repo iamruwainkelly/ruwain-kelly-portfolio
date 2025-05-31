@@ -61,9 +61,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Animated Background Elements -->
-    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-primary opacity-20"></div>
   </footer>
 </template>
 

@@ -9,7 +9,7 @@
         </h1>
         <p class="text-gray-300 text-lg max-w-3xl mx-auto">
           This is a live demonstration of the Terraform backend API integration. 
-          The backend is running on port 3002 and provides secure infrastructure automation capabilities.
+          The backend is running on port 3001 and provides secure infrastructure automation capabilities.
         </p>
       </div>
 
@@ -154,28 +154,28 @@
         <h2 class="text-xl font-semibold text-white mb-4">API Resources & Examples</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <a 
-            href="http://localhost:3002/health" 
+            href="http://localhost:3001/health" 
             target="_blank"
             class="block p-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-center"
           >
             📊 Health Check
           </a>
           <a 
-            href="http://localhost:3002/status" 
+            href="http://localhost:3001/status" 
             target="_blank"
             class="block p-4 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-center"
           >
             📈 System Status
           </a>
           <a 
-            href="http://localhost:3002/api/docs" 
+            href="http://localhost:3001/api/docs" 
             target="_blank"
             class="block p-4 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors text-center"
           >
             📚 API Documentation
           </a>
           <a 
-            href="http://localhost:3002/examples/vue-integration.html" 
+            href="http://localhost:3001/examples/vue-integration.html" 
             target="_blank"
             class="block p-4 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors text-center"
           >
@@ -204,7 +204,7 @@
                 <li>• JWT authentication system</li>
                 <li>• Docker sandboxing ready</li>
                 <li>• Real-time job tracking</li>
-                <li>• Running on port 3002</li>
+                <li>• Running on port 3001</li>
               </ul>
             </div>
           </div>
@@ -243,7 +243,7 @@ export default {
     async checkConnection() {
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3002/status')
+        const response = await fetch('http://localhost:3001/status')
         if (response.ok) {
           const data = await response.json()
           this.systemInfo = data
@@ -268,7 +268,7 @@ export default {
     async authenticate() {
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3002/auth/login', {
+        const response = await fetch('http://localhost:3001/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -332,7 +332,7 @@ output "file_path" {
 }`
 
       try {
-        const response = await fetch(`http://localhost:3002/terraform/${operation}`, {
+        const response = await fetch(`http://localhost:3001/terraform/${operation}`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${this.authToken}`,
@@ -386,7 +386,7 @@ output "file_path" {
       
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3002/terraform/jobs', {
+        const response = await fetch('http://localhost:3001/terraform/jobs', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${this.authToken}`,

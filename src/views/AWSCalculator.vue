@@ -237,15 +237,15 @@
           <div class="glass-card p-6">
             <h3 class="text-xl font-bold mb-4 gradient-text">Quick Presets</h3>
             <div class="space-y-2">
-              <button @click="applyPreset('startup')" class="w-full text-left p-3 bg-dark-surface hover:bg-dark-border rounded-lg transition-colors">
+              <button @click="applyPreset('startup')" class="preset-button">
                 <h4 class="font-semibold text-white text-sm">Startup Setup</h4>
                 <p class="text-light-text text-xs">Basic setup for small applications</p>
               </button>
-              <button @click="applyPreset('production')" class="w-full text-left p-3 bg-dark-surface hover:bg-dark-border rounded-lg transition-colors">
+              <button @click="applyPreset('production')" class="preset-button">
                 <h4 class="font-semibold text-white text-sm">Production Setup</h4>
                 <p class="text-light-text text-xs">High availability production environment</p>
               </button>
-              <button @click="applyPreset('enterprise')" class="w-full text-left p-3 bg-dark-surface hover:bg-dark-border rounded-lg transition-colors">
+              <button @click="applyPreset('enterprise')" class="preset-button">
                 <h4 class="font-semibold text-white text-sm">Enterprise Setup</h4>
                 <p class="text-light-text text-xs">Large scale enterprise infrastructure</p>
               </button>
@@ -413,5 +413,24 @@ const applyPreset = (preset) => {
 
 .form-select {
   @apply w-full px-4 py-3 bg-dark-surface border border-dark-border rounded-lg text-white focus:border-primary-orange focus:ring-1 focus:ring-primary-orange focus:outline-none transition-colors;
+}
+
+.preset-button {
+  @apply w-full text-left bg-dark-surface hover:bg-dark-border rounded-lg transition-colors duration-200 ease-in-out;
+  min-height: 64px;
+  padding: 12px;
+  transform: translateZ(0); /* Force hardware acceleration */
+  will-change: background-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.preset-button:hover {
+  transform: none; /* Prevent any transform changes */
+}
+
+.preset-button:active {
+  transform: none; /* Prevent any transform changes on click */
 }
 </style>

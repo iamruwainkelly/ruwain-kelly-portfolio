@@ -247,8 +247,11 @@ let charts = {
 
 // Initialize charts after component mounts
 onMounted(async () => {
+  console.log('Projects component mounted')
   await nextTick()
-  initializeCharts()
+  setTimeout(() => {
+    initializeCharts()
+  }, 100)
 })
 
 const initializeCharts = () => {
