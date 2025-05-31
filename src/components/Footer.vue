@@ -43,21 +43,29 @@
             </a>
           </div>
           <div class="space-y-2 text-sm text-text-secondary">
-            <p>📧 info@ruwainkelly.com</p>
-            <p>🌍 Available for remote opportunities</p>
+            <p>📧 admin@ruwainkelly.co.za</p>
+            <p>📱 +27 74 760 7776</p>
+            <p>🌍 Cape Town, South Africa</p>
           </div>
         </div>
       </div>
 
       <!-- Bottom Bar -->
-      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-        <p class="text-text-secondary text-sm">
-          © {{ currentYear }} RUWΔIN KΞLLY. All rights reserved.
-        </p>
-        <div class="flex space-x-6 text-sm text-text-secondary">
-          <span>Built with Vue 3 & Tailwind CSS</span>
-          <span>•</span>
-          <span>Deployed on Vercel</span>
+      <div class="border-t border-gray-800 pt-8">
+        <div class="text-center">
+          <p class="text-text-secondary text-sm leading-relaxed max-w-4xl mx-auto mb-4">
+            ⚡ Built by <span class="text-primary-orange font-semibold">Ruwain Kelly</span> — 
+            Ops Leader | ERP & SCM Architect | Backend & Infra Engineer | 
+            <span class="text-primary-orange">SAP • SAGE • SYSPRO • AWS • Python</span> | 
+            Serving clients across Africa and Europe
+          </p>
+          <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6 text-xs text-text-secondary">
+            <span>© {{ currentYear }} RUWΔIN KΞLLY. All rights reserved.</span>
+            <span class="hidden md:block">•</span>
+            <span>Built with Vue 3 & Tailwind CSS</span>
+            <span class="hidden md:block">•</span>
+            <span>Deployed on Vercel</span>
+          </div>
         </div>
       </div>
     </div>
@@ -76,10 +84,11 @@ const currentYear = computed(() => new Date().getFullYear())
 
 const footerLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Projects', path: '/projects' },
   { name: 'About Me', path: '/about' },
-  { name: 'Contact', path: '/contact' },
-  { name: 'AWS Calculator', path: '/aws-calculator' }
+  { name: 'Projects', path: '/projects' },
+  { name: 'AWS Calculator', path: '/aws-calculator' },
+  { name: 'Terraform Demo', path: '/terraform-demo' },
+  { name: 'Contact', path: '/contact' }
 ]
 
 const socialLinks = [
@@ -90,12 +99,12 @@ const socialLinks = [
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/mr-r',
+    url: 'https://www.linkedin.com/in/mr-r',
     icon: UserIcon
   },
   {
     name: 'Email',
-    url: 'mailto:info@ruwainkelly.com',
+    url: 'mailto:admin@ruwainkelly.co.za',
     icon: EnvelopeIcon
   }
 ]

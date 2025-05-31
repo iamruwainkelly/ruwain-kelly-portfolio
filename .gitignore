@@ -68,3 +68,4 @@ jspm_packages/
 # Backup files
 *_backup.*
 *_old.*
+.vercel

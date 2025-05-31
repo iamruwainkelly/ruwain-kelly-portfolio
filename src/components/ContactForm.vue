@@ -47,10 +47,13 @@
         :class="{ 'border-red-500': errors.subject }"
       >
         <option value="">Select a subject</option>
-        <option value="project">New Project Inquiry</option>
-        <option value="collaboration">Collaboration Opportunity</option>
-        <option value="consultation">Technical Consultation</option>
-        <option value="support">Support Request</option>
+        <option value="cloud-backend">Cloud & Backend Setup</option>
+        <option value="aws-dashboard">AWS Cost Dashboard</option>
+        <option value="erp-integration">ERP Integration & Automation</option>
+        <option value="tech-advisory">Tech Architecture Advisory</option>
+        <option value="consultation">Free Consultation</option>
+        <option value="collaboration">Partnership/Collaboration</option>
+        <option value="support">Technical Support</option>
         <option value="other">Other</option>
       </select>
       <p v-if="errors.subject" class="text-red-400 text-sm mt-1">{{ errors.subject }}</p>

@@ -11,6 +11,28 @@
           Estimate your AWS infrastructure costs with our comprehensive calculator. 
           Plan your cloud budget effectively with real-time pricing data.
         </p>
+        
+        <!-- Currency Toggle -->
+        <div class="mt-6 inline-flex items-center gap-2 bg-dark-surface p-1 rounded-lg">
+          <button 
+            @click="setCurrency('USD')" 
+            :class="[
+              'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200',
+              currency === 'USD' ? 'bg-primary-orange text-white' : 'text-light-text hover:text-white'
+            ]"
+          >
+            USD ($)
+          </button>
+          <button 
+            @click="setCurrency('EUR')" 
+            :class="[
+              'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200',
+              currency === 'EUR' ? 'bg-primary-orange text-white' : 'text-light-text hover:text-white'
+            ]"
+          >
+            EUR (€)
+          </button>
+        </div>
       </div>
 
       <div class="grid lg:grid-cols-3 gap-8">
@@ -19,7 +41,7 @@
           <div class="glass-card p-8">
             <h2 class="text-2xl font-bold mb-6 gradient-text">Configuration</h2>
             
-            <form @submit.prevent="calculateCosts" class="space-y-6">
+            <form class="space-y-6">
               <!-- Region Selection -->
               <div>
                 <label for="region" class="block text-sm font-semibold text-white mb-2">
@@ -156,52 +178,134 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn-primary w-full">
-                <CalculatorIcon class="w-5 h-5 mr-2" />
-                Calculate Monthly Costs
-              </button>
+              <!-- Quick Presets -->
+              <div class="mt-8">
+                <label class="block text-sm font-semibold text-white mb-4">Quick Presets</label>
+                <div class="flex flex-wrap gap-4">
+                  <button @click="applyPreset('startup')" class="preset-btn">
+                    Startup Setup
+                  </button>
+                  <button @click="applyPreset('production')" class="preset-btn">
+                    Production Setup
+                  </button>
+                  <button @click="applyPreset('enterprise')" class="preset-btn">
+                    Enterprise Setup
+                  </button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
 
         <!-- Results Panel -->
         <div class="space-y-6">
-          <!-- Cost Breakdown -->
-          <div class="glass-card p-6">
-            <h3 class="text-xl font-bold mb-4 gradient-text">Cost Breakdown</h3>
-            <div v-if="costs" class="space-y-4">
-              <div class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">EC2 Instances</span>
-                <span class="font-semibold">${{ costs.ec2 }}</span>
+          <!-- Monthly Cost Pie Chart -->
+          <div v-if="costs && costs.total > 0" class="glass-card p-6">
+            <h3 class="text-xl font-bold mb-4 gradient-text">Monthly Cost Breakdown</h3>
+            <div class="relative h-64 mb-4">
+              <Doughnut
+                :data="chartData"
+                :options="chartOptions"
+                class="!h-64"
+              />
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold gradient-text mb-1">
+                {{ formatCurrency(costs.total) }}
               </div>
-              <div class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">EBS Storage</span>
-                <span class="font-semibold">${{ costs.storage }}</span>
-              </div>
-              <div v-if="costs.rds > 0" class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">RDS Database</span>
-                <span class="font-semibold">${{ costs.rds }}</span>
-              </div>
-              <div class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">Data Transfer</span>
-                <span class="font-semibold">${{ costs.dataTransfer }}</span>
-              </div>
-              <div v-if="costs.loadBalancer > 0" class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">Load Balancer</span>
-                <span class="font-semibold">${{ costs.loadBalancer }}</span>
-              </div>
-              <div v-if="costs.additional > 0" class="flex justify-between items-center py-2 border-b border-dark-border">
-                <span class="text-light-text">Additional Services</span>
-                <span class="font-semibold">${{ costs.additional }}</span>
-              </div>
-              <div class="flex justify-between items-center py-3 bg-gradient-to-r from-primary-orange/20 to-primary-purple/20 rounded-lg px-4">
-                <span class="text-white font-semibold">Total Monthly Cost</span>
-                <span class="text-2xl font-bold gradient-text">${{ costs.total }}</span>
+              <div class="text-sm text-light-text">Total Monthly Cost</div>
+            </div>
+          </div>
+
+          <!-- Detailed Cost Cards -->
+          <div v-if="costs" class="space-y-3">
+            <!-- EC2 Cost Card -->
+            <div class="glass-card p-4 border-l-4 border-blue-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">EC2 Instances</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    {{ formData.instances }}x {{ formData.ec2Type }} • Virtual servers for applications
+                  </p>
+                </div>
+                <span class="font-bold text-blue-400">{{ formatCurrency(costs.ec2) }}</span>
               </div>
             </div>
-            <div v-else class="text-center py-8">
-              <CalculatorIcon class="w-12 h-12 mx-auto mb-3 text-light-text" />
-              <p class="text-light-text">Configure your AWS setup and calculate costs</p>
+
+            <!-- Storage Cost Card -->
+            <div class="glass-card p-4 border-l-4 border-green-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">EBS Storage</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    {{ formData.storage }}GB {{ formData.storageType }} • Persistent block storage
+                  </p>
+                </div>
+                <span class="font-bold text-green-400">{{ formatCurrency(costs.storage) }}</span>
+              </div>
+            </div>
+
+            <!-- RDS Cost Card -->
+            <div v-if="costs.rds > 0" class="glass-card p-4 border-l-4 border-purple-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">RDS Database</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    {{ formData.rdsType }} + {{ formData.rdsStorage }}GB • Managed database service
+                  </p>
+                </div>
+                <span class="font-bold text-purple-400">{{ formatCurrency(costs.rds) }}</span>
+              </div>
+            </div>
+
+            <!-- Data Transfer Cost Card -->
+            <div v-if="costs.dataTransfer > 0" class="glass-card p-4 border-l-4 border-yellow-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">Data Transfer</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    {{ formData.dataTransfer }}GB/month • Internet data transfer costs
+                  </p>
+                </div>
+                <span class="font-bold text-yellow-400">{{ formatCurrency(costs.dataTransfer) }}</span>
+              </div>
+            </div>
+
+            <!-- Load Balancer Cost Card -->
+            <div v-if="costs.loadBalancer > 0" class="glass-card p-4 border-l-4 border-red-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">Load Balancer</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    {{ formData.loadBalancer.toUpperCase() }} • High availability & traffic distribution
+                  </p>
+                </div>
+                <span class="font-bold text-red-400">{{ formatCurrency(costs.loadBalancer) }}</span>
+              </div>
+            </div>
+
+            <!-- Additional Services Cost Card -->
+            <div v-if="costs.additional > 0" class="glass-card p-4 border-l-4 border-orange-500">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-white">Additional Services</h4>
+                  <p class="text-xs text-light-text mt-1">
+                    <span v-if="formData.cloudfront">CloudFront</span>
+                    <span v-if="formData.s3">{{ formData.cloudfront ? ', ' : '' }}S3</span>
+                    <span v-if="formData.route53">{{ (formData.cloudfront || formData.s3) ? ', ' : '' }}Route 53</span>
+                    <span v-if="formData.waf">{{ (formData.cloudfront || formData.s3 || formData.route53) ? ', ' : '' }}WAF</span>
+                  </p>
+                </div>
+                <span class="font-bold text-orange-400">{{ formatCurrency(costs.additional) }}</span>
+              </div>
+            </div>
+          </div>
+          <!-- Empty State -->
+          <div v-else class="glass-card p-8">
+            <div class="text-center">
+              <CalculatorIcon class="w-16 h-16 mx-auto mb-4 text-light-text" />
+              <h3 class="text-xl font-bold mb-2 text-white">Ready to Calculate</h3>
+              <p class="text-light-text">Configure your AWS setup above to see real-time cost estimates</p>
             </div>
           </div>
 
@@ -232,25 +336,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Quick Presets -->
-          <div class="glass-card p-6">
-            <h3 class="text-xl font-bold mb-4 gradient-text">Quick Presets</h3>
-            <div class="space-y-2">
-              <button @click="applyPreset('startup')" class="preset-button">
-                <h4 class="font-semibold text-white text-sm">Startup Setup</h4>
-                <p class="text-light-text text-xs">Basic setup for small applications</p>
-              </button>
-              <button @click="applyPreset('production')" class="preset-button">
-                <h4 class="font-semibold text-white text-sm">Production Setup</h4>
-                <p class="text-light-text text-xs">High availability production environment</p>
-              </button>
-              <button @click="applyPreset('enterprise')" class="preset-button">
-                <h4 class="font-semibold text-white text-sm">Enterprise Setup</h4>
-                <p class="text-light-text text-xs">Large scale enterprise infrastructure</p>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -258,12 +343,44 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { 
   CloudIcon, 
   CalculatorIcon, 
   LightBulbIcon 
 } from '@heroicons/vue/24/outline'
+import { Doughnut } from 'vue-chartjs'
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend
+} from 'chart.js'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
+
+// Currency state with localStorage persistence
+const currency = ref('USD')
+const exchangeRate = ref(0.85) // EUR to USD rate (approximate)
+
+const setCurrency = (newCurrency) => {
+  currency.value = newCurrency
+  localStorage.setItem('aws-calculator-currency', newCurrency)
+}
+
+// Load currency preference from localStorage
+onMounted(() => {
+  const savedCurrency = localStorage.getItem('aws-calculator-currency')
+  if (savedCurrency) {
+    currency.value = savedCurrency
+  }
+})
+
+const formatCurrency = (amount) => {
+  const value = currency.value === 'EUR' ? (parseFloat(amount) * exchangeRate.value) : parseFloat(amount)
+  const symbol = currency.value === 'EUR' ? '€' : '$'
+  return `${symbol}${value.toFixed(2)}`
+}
 
 const formData = reactive({
   region: 'us-east-1',
@@ -281,9 +398,7 @@ const formData = reactive({
   waf: false
 })
 
-const costs = ref(null)
-
-// AWS Pricing (simplified)
+// AWS Pricing (simplified, per hour unless noted)
 const pricing = {
   ec2: {
     't3.micro': 0.0104,
@@ -310,10 +425,17 @@ const pricing = {
     'alb': 22.5,
     'nlb': 22.5
   },
-  dataTransfer: 0.09
+  dataTransfer: 0.09,
+  additionalServices: {
+    cloudfront: 1.0,
+    s3: 2.3,
+    route53: 0.5,
+    waf: 5.0
+  }
 }
 
-const calculateCosts = () => {
+// Reactive cost calculation
+const costs = computed(() => {
   const hoursPerMonth = 730
   
   // EC2 costs
@@ -326,7 +448,7 @@ const calculateCosts = () => {
   const rdsCost = formData.rdsType ? 
     (pricing.rds[formData.rdsType] * hoursPerMonth) + (formData.rdsStorage * 0.115) : 0
   
-  // Data transfer costs
+  // Data transfer costs (first 100GB free)
   const dataTransferCost = Math.max(0, formData.dataTransfer - 100) * pricing.dataTransfer
   
   // Load balancer costs
@@ -334,14 +456,14 @@ const calculateCosts = () => {
   
   // Additional services
   let additionalCost = 0
-  if (formData.cloudfront) additionalCost += 1.0 // CloudFront basic
-  if (formData.s3) additionalCost += 2.3 // 100GB S3 standard
-  if (formData.route53) additionalCost += 0.5 // Hosted zone
-  if (formData.waf) additionalCost += 5.0 // Basic WAF
+  if (formData.cloudfront) additionalCost += pricing.additionalServices.cloudfront
+  if (formData.s3) additionalCost += pricing.additionalServices.s3
+  if (formData.route53) additionalCost += pricing.additionalServices.route53
+  if (formData.waf) additionalCost += pricing.additionalServices.waf
   
   const total = ec2Cost + storageCost + rdsCost + dataTransferCost + loadBalancerCost + additionalCost
   
-  costs.value = {
+  return {
     ec2: ec2Cost.toFixed(2),
     storage: storageCost.toFixed(2),
     rds: rdsCost.toFixed(2),
@@ -349,6 +471,91 @@ const calculateCosts = () => {
     loadBalancer: loadBalancerCost.toFixed(2),
     additional: additionalCost.toFixed(2),
     total: total.toFixed(2)
+  }
+})
+
+// Chart data for pie chart
+const chartData = computed(() => {
+  if (!costs.value || costs.value.total <= 0) return null
+  
+  const data = []
+  const labels = []
+  const colors = []
+  
+  if (parseFloat(costs.value.ec2) > 0) {
+    data.push(parseFloat(costs.value.ec2))
+    labels.push('EC2 Instances')
+    colors.push('#3B82F6')
+  }
+  if (parseFloat(costs.value.storage) > 0) {
+    data.push(parseFloat(costs.value.storage))
+    labels.push('EBS Storage')
+    colors.push('#10B981')
+  }
+  if (parseFloat(costs.value.rds) > 0) {
+    data.push(parseFloat(costs.value.rds))
+    labels.push('RDS Database')
+    colors.push('#8B5CF6')
+  }
+  if (parseFloat(costs.value.dataTransfer) > 0) {
+    data.push(parseFloat(costs.value.dataTransfer))
+    labels.push('Data Transfer')
+    colors.push('#F59E0B')
+  }
+  if (parseFloat(costs.value.loadBalancer) > 0) {
+    data.push(parseFloat(costs.value.loadBalancer))
+    labels.push('Load Balancer')
+    colors.push('#EF4444')
+  }
+  if (parseFloat(costs.value.additional) > 0) {
+    data.push(parseFloat(costs.value.additional))
+    labels.push('Additional Services')
+    colors.push('#F97316')
+  }
+  
+  return {
+    labels,
+    datasets: [{
+      data,
+      backgroundColor: colors,
+      borderColor: colors.map(color => color + '80'),
+      borderWidth: 2
+    }]
+  }
+})
+
+// Chart options
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: 'bottom',
+      labels: {
+        color: '#9CA3AF',
+        padding: 20,
+        usePointStyle: true,
+        font: {
+          size: 12
+        }
+      }
+    },
+    tooltip: {
+      backgroundColor: '#1F2937',
+      titleColor: '#FFFFFF',
+      bodyColor: '#FFFFFF',
+      borderColor: '#374151',
+      borderWidth: 1,
+      callbacks: {
+        label: (context) => {
+          const value = currency.value === 'EUR' ? 
+            (context.raw * exchangeRate.value).toFixed(2) : 
+            context.raw.toFixed(2)
+          const symbol = currency.value === 'EUR' ? '€' : '$'
+          return `${context.label}: ${symbol}${value}`
+        }
+      }
+    }
   }
 }
 
@@ -402,35 +609,89 @@ const applyPreset = (preset) => {
       })
       break
   }
-  calculateCosts()
 }
 </script>
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-3 bg-dark-surface border border-dark-border rounded-lg text-white placeholder-light-text focus:border-primary-orange focus:ring-1 focus:ring-primary-orange focus:outline-none transition-colors;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  color: #FFFFFF;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #F97316;
+  box-shadow: 0 0 0 1px #F97316;
+}
+
+.form-input::placeholder {
+  color: #9CA3AF;
 }
 
 .form-select {
-  @apply w-full px-4 py-3 bg-dark-surface border border-dark-border rounded-lg text-white focus:border-primary-orange focus:ring-1 focus:ring-primary-orange focus:outline-none transition-colors;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  color: #FFFFFF;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #F97316;
+  box-shadow: 0 0 0 1px #F97316;
 }
 
 .preset-button {
-  @apply w-full text-left bg-dark-surface hover:bg-dark-border rounded-lg transition-colors duration-200 ease-in-out;
+  width: 100%;
+  text-align: left;
+  background-color: #1F2937;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
   min-height: 64px;
   padding: 12px;
-  transform: translateZ(0); /* Force hardware acceleration */
+  transform: translateZ(0);
   will-change: background-color;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: none;
+  cursor: pointer;
 }
 
 .preset-button:hover {
-  transform: none; /* Prevent any transform changes */
+  background-color: #374151;
 }
 
 .preset-button:active {
-  transform: none; /* Prevent any transform changes on click */
+  background-color: #374151;
+}
+
+.preset-btn {
+  background-color: #1F2937;
+  color: #FFFFFF;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.preset-btn:hover {
+  background-color: #374151;
+}
+
+.preset-btn:active {
+  background-color: #374151;
 }
 </style>
