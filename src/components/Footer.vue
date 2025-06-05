@@ -31,8 +31,7 @@
             <div class="flex flex-wrap justify-center gap-4 text-xs">
               <router-link to="/" class="nav-link">Home</router-link>
               <router-link to="/projects" class="nav-link">Projects</router-link>
-              <router-link to="/aws-calculator" class="nav-link">AWS Calculator</router-link>
-              <router-link to="/terraform-demo" class="nav-link">Terraform Demo</router-link>
+              <router-link to="/about" class="nav-link">About Me</router-link>
               <router-link to="/contact" class="nav-link">Contact</router-link>
             </div>
             <p class="text-xs text-neutral-500 flex items-center gap-1">
@@ -53,7 +52,7 @@
             </p>
             <p class="flex items-center justify-center md:justify-end gap-2">
               <span class="text-primary-orange">📍</span>
-              Cape Town, South Africa
+              Cape Town, South Africa / EU
             </p>
           </div>
         </div>
@@ -71,8 +70,6 @@
             © {{ currentYear }} 
             <span class="gradient-text font-semibold">RUWΔIN KΞLLY</span>
             • All rights reserved
-            <span class="hidden sm:inline">•</span>
-            <span class="hidden sm:inline text-primary-orange">Made with ❤️ in Cape Town</span>
           </p>
         </div>
       </div>

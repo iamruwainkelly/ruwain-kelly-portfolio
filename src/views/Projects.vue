@@ -20,7 +20,7 @@
         </div>
 
         <!-- Projects Grid -->
-        <div class="grid lg:grid-cols-2 gap-8 mb-16">
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-16">
           <!-- Project 1: AWS Serverless Cost Intelligence Dashboard -->
           <div class="project-card group">
             <div class="project-card-inner">
@@ -160,13 +160,106 @@
                   <CodeBracketIcon class="w-4 h-4" />
                   View GitHub
                 </a>
-                <router-link v-if="projects[1].caseStudy"
+                <router-link v-if="projects[1].liveDemo && projects[1].liveDemo.startsWith('/')"
+                  :to="projects[1].liveDemo" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </router-link>
+                <a v-else-if="projects[1].liveDemo"
+                  :href="projects[1].liveDemo" 
+                  target="_blank" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </a>
+                <router-link v-else-if="projects[1].caseStudy"
                   :to="projects[1].caseStudy" 
                   class="btn-primary"
                 >
                   <EyeIcon class="w-4 h-4" />
                   Case Study
                 </router-link>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: AWS Cost Calculator -->
+          <div class="project-card group">
+            <div class="project-card-inner">
+              <!-- Calculator Interface Mockup -->
+              <div class="calculator-container mb-6">
+                <div class="calculator-interface">
+                  <div class="calc-header">
+                    <div class="calc-title">AWS Calculator</div>
+                    <div class="calc-region">us-east-1</div>
+                  </div>
+                  <div class="calc-services">
+                    <div class="service-row">
+                      <span class="service-name">EC2</span>
+                      <span class="service-cost">$24.56</span>
+                    </div>
+                    <div class="service-row">
+                      <span class="service-name">RDS</span>
+                      <span class="service-cost">$18.32</span>
+                    </div>
+                    <div class="service-row">
+                      <span class="service-name">S3</span>
+                      <span class="service-cost">$12.44</span>
+                    </div>
+                  </div>
+                  <div class="calc-total">
+                    <span class="total-label">Monthly Total</span>
+                    <span class="total-amount">$55.32</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project Info -->
+              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[2].title }}</h2>
+              <p class="text-light-text mb-2">{{ projects[2].subtitle }}</p>
+              <p class="text-light-text mb-4">{{ projects[2].description }}</p>
+              
+              <!-- Metrics Display -->
+              <div class="metrics-grid mb-6">
+                <div v-for="(value, key) in projects[2].mockData" :key="key" class="metric-item">
+                  <div class="metric-value">{{ value }}</div>
+                  <div class="metric-label">{{ formatMetricLabel(key) }}</div>
+                </div>
+              </div>
+              
+              <!-- Tech Stack Badges -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span v-for="tech in projects[2].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-4">
+                <a 
+                  :href="projects[2].github" 
+                  target="_blank" 
+                  class="btn-secondary"
+                >
+                  <CodeBracketIcon class="w-4 h-4" />
+                  View GitHub
+                </a>
+                <router-link v-if="projects[2].liveDemo && projects[2].liveDemo.startsWith('/')"
+                  :to="projects[2].liveDemo" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </router-link>
+                <a v-else-if="projects[2].liveDemo"
+                  :href="projects[2].liveDemo" 
+                  target="_blank" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </a>
               </div>
             </div>
           </div>
@@ -903,6 +996,114 @@ onUnmounted(cleanup)
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Calculator Interface */
+.calculator-container {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 108, 0, 0.2);
+  padding: 1rem;
+}
+
+.calculator-interface {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 108, 0, 0.3);
+  padding: 1rem;
+  min-height: 120px;
+}
+
+.calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 108, 0, 0.2);
+}
+
+.calc-title {
+  font-weight: 600;
+  color: #ff6c00;
+  font-size: 0.875rem;
+}
+
+.calc-region {
+  background: rgba(255, 108, 0, 0.1);
+  color: #ff6c00;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(255, 108, 0, 0.3);
+}
+
+.calc-services {
+  margin-bottom: 0.75rem;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.service-row:hover {
+  background: rgba(255, 108, 0, 0.05);
+  border-radius: 4px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.service-name {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.service-cost {
+  color: #ff6c00;
+  font-weight: 600;
+  animation: costFlicker 2s ease-in-out infinite;
+}
+
+@keyframes costFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.calc-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 108, 0, 0.2);
+  font-size: 0.875rem;
+}
+
+.total-label {
+  color: #a678ff;
+  font-weight: 600;
+}
+
+.total-amount {
+  color: #ff6c00;
+  font-weight: bold;
+  font-size: 1rem;
+  animation: totalPulse 3s ease-in-out infinite;
+}
+
+@keyframes totalPulse {
+  0%, 100% { 
+    color: #ff6c00;
+    transform: scale(1);
+  }
+  50% { 
+    color: #a678ff;
+    transform: scale(1.05);
+  }
 }
 
 /* Responsive Design */

@@ -15,6 +15,7 @@ A production-grade, full-featured personal portfolio site that blends modern des
 
 - ⚙️ **Live Terraform Integration:** Visual frontend tied to a secure Node.js backend running real Terraform plans (or mocked for demo)
 - 💰 **AWS Cost Intelligence Tool:** Estimate AWS cloud costs with responsive UI and sliders
+- 🔥 **AWS Serverless Dashboard:** Live AWS integration with Lambda, API Gateway, DynamoDB monitoring (demo mode available)
 - 📂 **Project Detail Pages:** Real projects with architecture, stack, features, and interactive charts
 - 📱 **Fully Responsive:** Optimised for mobile, tablet, and large screens
 - 🌗 **Dark UI:** Modern gradient themes and glassmorphism effects
@@ -58,14 +59,24 @@ npm install
 npm run dev
 
 
-🌍 Routes & Pages
+## 🌍 Routes & Pages
 
-Route                      Description
-/                          Homepage with animated intro
-/projects                  Interactive project showcase
-/terraform-demo            Live backend integration demo
-/aws-calculator            Serverless cost estimation dashboard
-/projects/:id              Project details with architecture, features
+| Route                     | Description                                    |
+|---------------------------|------------------------------------------------|
+| `/`                       | Homepage with animated intro                  |
+| `/projects`               | Interactive project showcase                  |
+| `/terraform-demo`         | Live backend integration demo                 |
+| `/aws-calculator`         | Serverless cost estimation dashboard          |
+| `/aws-serverless`         | Live AWS monitoring dashboard (demo/live mode)|
+| `/projects/:id`           | Project details with architecture, features   |
+
+## 🚀 AWS Integration Features
+
+### **AWS Serverless Dashboard** (`/aws-serverless`)
+- **Demo Mode**: Realistic mock AWS data (works out-of-the-box)
+- **Live Mode**: Real AWS integration with your infrastructure
+- **Services**: Lambda, API Gateway, DynamoDB, CloudWatch, Cost Explorer
+- **Setup**: See [AWS_INTEGRATION_SETUP.md](./AWS_INTEGRATION_SETUP.md) for configuration
 
 
 🧠 Author

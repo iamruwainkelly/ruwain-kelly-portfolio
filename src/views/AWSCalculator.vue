@@ -202,12 +202,14 @@
           <!-- Monthly Cost Pie Chart -->
           <div v-if="costs && costs.total > 0" class="glass-card p-6">
             <h3 class="text-xl font-bold mb-4 gradient-text">Monthly Cost Breakdown</h3>
-            <div class="relative h-64 mb-4">
-              <Doughnut
-                :data="chartData"
-                :options="chartOptions"
-                class="!h-64"
-              />
+            <div class="relative h-64 mb-4 flex justify-center items-center overflow-hidden">
+              <div class="w-full h-full max-w-sm max-h-64">
+                <Doughnut
+                  :data="chartData"
+                  :options="chartOptions"
+                  class="!h-64"
+                  />
+              </div>
             </div>
             <div class="text-center">
               <div class="text-2xl font-bold gradient-text mb-1">

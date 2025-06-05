@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Projects from '../views/Projects.vue'
 import About from '../views/About.vue'
-import Resume from '../views/Resume.vue'
 import Contact from '../views/Contact.vue'
-import AWSCalculator from '../views/AWSCalculator.vue'
 import ProjectDetail from '../views/ProjectDetail.vue'
 import TerraformDemo from '../views/TerraformDemo.vue'
+import AWSCalculator from '../views/AWSCalculator.vue'
+import AWSServerless from '../views/AWSServerless.vue'
 
 const routes = [
   {
@@ -19,28 +19,7 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: Projects,
-    meta: { title: 'Projects - RUWΔIN KΞLLY' }
-  },
-  {
-    path: '/projects/:id',
-    name: 'ProjectDetail',
-    component: ProjectDetail,
-    props: true,
-    meta: { title: 'Project Details - RUWΔIN KΞLLY' }
-  },
-  {
-    path: '/projects/serverless-dashboard',
-    name: 'ServerlessDashboard',
-    component: ProjectDetail,
-    props: { id: 'serverless-dashboard' },
-    meta: { title: 'AWS Serverless Cost Intelligence Dashboard - RUWΔIN KΞLLY' }
-  },
-  {
-    path: '/case-study',
-    name: 'CaseStudy',
-    component: ProjectDetail,
-    props: { id: 'terraform-aws-suite' },
-    meta: { title: 'Terraform AWS Infrastructure Case Study - RUWΔIN KΞLLY' }
+    meta: { title: 'Featured Projects - RUWΔIN KΞLLY' }
   },
   {
     path: '/about',
@@ -54,6 +33,8 @@ const routes = [
     component: Contact,
     meta: { title: 'Contact - RUWΔIN KΞLLY' }
   },
+
+  // Live Demo Routes (accessed from Projects page)
   {
     path: '/aws-calculator',
     name: 'AWSCalculator',
@@ -65,6 +46,27 @@ const routes = [
     name: 'TerraformDemo',
     component: TerraformDemo,
     meta: { title: 'Live Terraform Backend Demo - RUWΔIN KΞLLY' }
+  },
+  {
+    path: '/aws-serverless',
+    name: 'AWSServerless',
+    component: AWSServerless,
+    meta: { title: 'AWS Serverless Dashboard - RUWΔIN KΞLLY' }
+  },
+  // Project Detail Routes (accessed from Projects page)
+  {
+    path: '/projects/:id',
+    name: 'ProjectDetail',
+    component: ProjectDetail,
+    props: true,
+    meta: { title: 'Project Details - RUWΔIN KΞLLY' }
+  },
+  {
+    path: '/case-study',
+    name: 'CaseStudy',
+    component: ProjectDetail,
+    props: { id: 'terraform-aws-suite' },
+    meta: { title: 'Terraform AWS Infrastructure Case Study - RUWΔIN KΞLLY' }
   }
 ]
 

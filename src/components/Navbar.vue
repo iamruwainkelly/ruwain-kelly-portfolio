@@ -63,10 +63,8 @@ const isMobileMenuOpen = ref(false)
 
 const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'About Me', path: '/about' },
   { name: 'Projects', path: '/projects' },
-  { name: 'AWS Calculator', path: '/aws-calculator' },
-  { name: 'Terraform Demo', path: '/terraform-demo' },
+  { name: 'About Me', path: '/about' },
   { name: 'Contact', path: '/contact' }
 ]
 

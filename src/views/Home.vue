@@ -129,7 +129,7 @@
             <router-link to="/contact" class="btn-primary">
               Discuss Your Project
             </router-link>
-            <a href="mailto:ruwain@example.com" class="btn-secondary">
+            <a href="mailto:admin@ruwainkelly.co.za" class="btn-secondary">
               Strategic Consultation
             </a>
           </div>

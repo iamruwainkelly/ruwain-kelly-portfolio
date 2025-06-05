@@ -6,12 +6,12 @@
         <h1 class="text-4xl lg:text-5xl font-bold mb-4 gradient-text">RUWΔIN KΞLLY</h1>
         <h2 class="text-xl lg:text-2xl text-light-text mb-6">Enterprise Technologist | Supply Chain & ERP Architect | Cloud Strategist</h2>
         <div class="flex flex-wrap justify-center gap-4 mb-8">
-          <a href="mailto:ruwain@example.com" class="text-primary-orange hover:text-primary-purple transition-colors">
-            ruwain@example.com
+          <a href="mailto:admin@ruwainkelly.co.za" class="text-primary-orange hover:text-primary-purple transition-colors">
+            admin@ruwainkelly.co.za
           </a>
           <span class="text-dark-border">•</span>
-          <a href="tel:+1234567890" class="text-primary-orange hover:text-primary-purple transition-colors">
-            +1 (234) 567-890
+          <a href="tel:+27747607776" class="text-primary-orange hover:text-primary-purple transition-colors">
+            +27 74 760 7776
           </a>
           <span class="text-dark-border">•</span>
           <span class="text-light-text">San Francisco, CA</span>
@@ -21,7 +21,7 @@
             <ArrowDownTrayIcon class="w-5 h-5" />
             Download PDF
           </a>
-          <a href="https://github.com/ruwainkelly" target="_blank" class="btn-secondary inline-flex items-center gap-2">
+          <a href="https://github.com/iamruwainkelly" target="_blank" class="btn-secondary inline-flex items-center gap-2">
             <CodeBracketIcon class="w-5 h-5" />
             GitHub
           </a>

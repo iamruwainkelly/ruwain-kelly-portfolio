@@ -191,7 +191,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 **RUWΔIN KΞLLY**
 - Portfolio: [Live Site](https://ruwain-kelly-portfolio.vercel.app)
-- GitHub: [@ruwainkelly](https://github.com/ruwainkelly)
+- GitHub: [@iamruwainkelly](https://github.com/iamruwainkelly)
 - LinkedIn: [RUWΔIN KΞLLY](https://linkedin.com/in/ruwainkelly)
 
 ---

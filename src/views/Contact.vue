@@ -64,7 +64,7 @@
                 </div>
                 <div>
                   <h4 class="font-semibold text-white">Location</h4>
-                  <p class="text-light-text">Cape Town, South Africa</p>
+                  <p class="text-light-text">Cape Town, South Africa / EU</p>
                 </div>
               </div>
 
