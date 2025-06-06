@@ -1,11 +1,32 @@
 <template>
   <div class="min-h-screen bg-dark-bg text-white">
-    <!-- Header Spacing Fix - Push content below navbar with extra padding -->
-    <div class="pt-28 px-6 pb-6">
-      <!-- Demo Mode Banner -->
-      <div class="bg-gradient-to-r from-orange-500 to-purple-600 p-4 rounded-xl mb-8 text-center backdrop-blur-sm border border-orange-500/20 sticky top-20 z-40">
-        <p class="font-semibold text-lg">🚛 DEMO: German/European Logistics Tracking - Portfolio Demonstration Only</p>
+    <!-- Loading State -->
+    <div v-if="!loaded" class="min-h-screen flex items-center justify-center">
+      <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+        <p class="text-xl text-gray-400">Loading SCM Dashboard...</p>
       </div>
+    </div>
+
+    <!-- Error State -->
+    <div v-else-if="error" class="min-h-screen flex items-center justify-center">
+      <div class="text-center bg-red-900/20 border border-red-500/50 rounded-xl p-8">
+        <h1 class="text-2xl font-bold text-red-400 mb-4">⚠️ Component Load Error</h1>
+        <p class="text-gray-300 mb-4">{{ error }}</p>
+        <button @click="retry" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+          Retry Loading
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <div v-else class="min-h-screen bg-dark-bg text-white">
+      <!-- Header Spacing Fix - Push content below navbar with extra padding -->
+      <div class="pt-28 px-6 pb-6">
+        <!-- Demo Mode Banner -->
+        <div class="bg-gradient-to-r from-orange-500 to-purple-600 p-4 rounded-xl mb-8 text-center backdrop-blur-sm border border-orange-500/20 sticky top-20 z-40">
+          <p class="font-semibold text-lg">🚛 DEMO: German/European Logistics Tracking - Portfolio Demonstration Only</p>
+        </div>
 
       <!-- Header with KPIs -->
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
@@ -143,6 +164,7 @@
         </button>
       </div>
 
+      </div>
     </div>
 
     <!-- Order Details Modal -->
@@ -165,9 +187,13 @@ import { mockOrders, mockCarriers, mockActivities } from '../mock/data.js'
 
 Chart.register(...registerables)
 
+// Loading and error states
+const loaded = ref(false)
+const error = ref(null)
+
 // Reactive data
 const displayedOrders = ref([])
-const carriers = ref(mockCarriers)
+const carriers = ref(mockCarriers || [])
 const activities = ref([])
 const selectedOrder = ref(null)
 const deliveryChart = ref(null)
@@ -184,11 +210,19 @@ const stats = ref({
 // WebSocket simulation
 let updateInterval = null
 
-onMounted(() => {
-  loadInitialData()
-  initializeCharts()
-  startLiveUpdates()
-  updateSyncTime()
+onMounted(async () => {
+  try {
+    console.log('🚛 SCM Dashboard mounting...')
+    await loadInitialData()
+    await initializeCharts()
+    startLiveUpdates()
+    updateSyncTime()
+    loaded.value = true
+    console.log('✅ SCM Dashboard mounted successfully')
+  } catch (err) {
+    console.error('❌ SCM Dashboard mount error:', err)
+    error.value = `Failed to load dashboard: ${err.message}`
+  }
 })
 
 onUnmounted(() => {
@@ -209,93 +243,124 @@ function updateSyncTime() {
   })
 }
 
+function retry() {
+  loaded.value = false
+  error.value = null
+  onMounted()
+}
+
 function loadInitialData() {
-  displayedOrders.value = mockOrders.slice(0, 9)
-  activities.value = mockActivities.slice(0, 10)
-  updateStats()
+  try {
+    console.log('📊 Loading SCM data...')
+    displayedOrders.value = (mockOrders || []).slice(0, 9)
+    activities.value = (mockActivities || []).slice(0, 10)
+    carriers.value = mockCarriers || []
+    updateStats()
+    console.log('✅ Data loaded:', { orders: displayedOrders.value.length, activities: activities.value.length })
+  } catch (err) {
+    console.error('❌ Data loading error:', err)
+    throw new Error(`Data loading failed: ${err.message}`)
+  }
 }
 
 function updateStats() {
-  stats.value = {
-    onTrack: displayedOrders.value.filter(o => o.status === 'on_track').length,
-    atRisk: displayedOrders.value.filter(o => o.status === 'at_risk').length,
-    delayed: displayedOrders.value.filter(o => o.status === 'delayed').length
+  try {
+    const orders = displayedOrders.value || []
+    stats.value = {
+      onTrack: orders.filter(o => o?.status === 'on_track').length,
+      atRisk: orders.filter(o => o?.status === 'at_risk').length,
+      delayed: orders.filter(o => o?.status === 'delayed').length
+    }
+  } catch (err) {
+    console.error('❌ Stats update error:', err)
+    stats.value = { onTrack: 0, atRisk: 0, delayed: 0 }
   }
 }
 
 function initializeCharts() {
-  // Delivery Status Chart - Smaller and more compact
-  const deliveryCtx = deliveryChart.value.getContext('2d')
-  new Chart(deliveryCtx, {
-    type: 'doughnut',
-    data: {
-      labels: ['On Track', 'At Risk', 'Delayed', 'Delivered'],
-      datasets: [{
-        data: [45, 15, 8, 32],
-        backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#6B7280'],
-        borderWidth: 2,
-        borderColor: '#1F2937'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { 
-            color: '#F8F8F8',
-            padding: 15,
-            font: { size: 12 }
+  try {
+    console.log('📈 Initializing charts...')
+    
+    // Wait for DOM to be ready
+    setTimeout(() => {
+      // Delivery Status Chart
+      const deliveryElement = document.querySelector('[ref="deliveryChart"]')
+      if (deliveryElement) {
+        const deliveryCtx = deliveryElement.getContext('2d')
+        new Chart(deliveryCtx, {
+          type: 'doughnut',
+          data: {
+            labels: ['On Track', 'At Risk', 'Delayed', 'Delivered'],
+            datasets: [{
+              data: [45, 15, 8, 32],
+              backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#6B7280'],
+              borderWidth: 2,
+              borderColor: '#1F2937'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: { 
+                  color: '#F8F8F8',
+                  padding: 15,
+                  font: { size: 12 }
+                }
+              }
+            }
           }
-        }
+        })
       }
-    }
-  })
 
-  // Risk Factors Chart - Smaller and more compact
-  const riskCtx = riskChart.value.getContext('2d')
-  new Chart(riskCtx, {
-    type: 'bar',
-    data: {
-      labels: ['Weather', 'Traffic', 'Warehouse', 'Carrier'],
-      datasets: [{
-        label: 'Risk Impact %',
-        data: [25, 35, 20, 20],
-        backgroundColor: 'rgba(249, 115, 22, 0.8)',
-        borderColor: 'rgba(249, 115, 22, 1)',
-        borderWidth: 1,
-        borderRadius: 4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 50,
-          ticks: { 
-            color: '#F8F8F8',
-            font: { size: 11 }
+      // Risk Factors Chart
+      const riskElement = document.querySelector('[ref="riskChart"]')
+      if (riskElement) {
+        const riskCtx = riskElement.getContext('2d')
+        new Chart(riskCtx, {
+          type: 'bar',
+          data: {
+            labels: ['Weather', 'Traffic', 'Customs', 'Carrier Delay', 'Route Issues'],
+            datasets: [{
+              label: 'Risk Impact Score',
+              data: [8.2, 6.5, 4.1, 7.8, 5.3],
+              backgroundColor: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6'],
+              borderWidth: 1,
+              borderColor: '#1F2937'
+            }]
           },
-          grid: { color: '#374151' }
-        },
-        x: {
-          ticks: { 
-            color: '#F8F8F8',
-            font: { size: 11 }
-          },
-          grid: { color: '#374151' }
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 10,
+                grid: { color: '#374151' },
+                ticks: { color: '#F8F8F8' }
+              },
+              x: {
+                grid: { color: '#374151' },
+                ticks: { color: '#F8F8F8' }
+              }
+            }
+          }
+        })
       }
-    }
-  })
+      
+      console.log('✅ Charts initialized')
+    }, 100)
+  } catch (err) {
+    console.error('❌ Chart initialization error:', err)
+    throw new Error(`Charts failed to initialize: ${err.message}`)
+  }
 }
 
 function startLiveUpdates() {
