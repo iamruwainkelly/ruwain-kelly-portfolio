@@ -85,7 +85,7 @@
           <div class="bg-dark-surface/60 backdrop-blur-md border border-dark-border rounded-xl p-6 hover:border-orange-500/50 transition-all">
             <h3 class="text-lg font-semibold mb-4 text-orange-400">📉 Delivery Status Distribution</h3>
             <div class="w-full lg:w-1/2 mx-auto h-64 max-h-96 flex items-center justify-center">
-              <canvas ref="deliveryChart" class="max-w-full max-h-full"></canvas>
+              <canvas id="deliveryChart" class="max-w-full max-h-full"></canvas>
             </div>
           </div>
 
@@ -93,7 +93,7 @@
           <div class="bg-dark-surface/60 backdrop-blur-md border border-dark-border rounded-xl p-6 hover:border-purple-500/50 transition-all">
             <h3 class="text-lg font-semibold mb-4 text-purple-400">📈 Risk Factor Analysis</h3>
             <div class="w-full lg:w-1/2 mx-auto h-64 max-h-96 flex items-center justify-center">
-              <canvas ref="riskChart" class="max-w-full max-h-full"></canvas>
+              <canvas id="riskChart" class="max-w-full max-h-full"></canvas>
             </div>
           </div>
         </div>
@@ -147,6 +147,16 @@
           <span class="mr-2">🔄</span>
           Update Order Status
         </button>
+        <button @click="generateDeliveryReport" 
+                class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center">
+          <span class="mr-2">📋</span>
+          Generate Delivery Report
+        </button>
+        <button @click="simulateReturnOrder" 
+                class="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center">
+          <span class="mr-2">🔄</span>
+          Simulate Return Order
+        </button>
         <button @click="generateReport" 
                 class="px-6 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center">
           <span class="mr-2">📄</span>
@@ -156,11 +166,6 @@
                 class="px-6 py-3 bg-dark-surface border border-dark-border text-white rounded-xl hover:border-orange-500 transition-all duration-300 flex items-center">
           <span class="mr-2">📊</span>
           Export CSV
-        </button>
-        <button @click="scheduleReturn" 
-                class="px-6 py-3 bg-dark-surface border border-dark-border text-white rounded-xl hover:border-purple-500 transition-all duration-300 flex items-center">
-          <span class="mr-2">↩️</span>
-          Schedule Return
         </button>
       </div>
 
@@ -177,7 +182,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { Chart, registerables } from 'chart.js'
 import OrderCard from '../components/OrderCard.vue'
 import CarrierCard from '../components/CarrierCard.vue'
@@ -191,9 +196,70 @@ Chart.register(...registerables)
 const loaded = ref(false)
 const error = ref(null)
 
+// Fallback data in case mock imports fail
+const fallbackOrders = [
+  {
+    id: 'DE-DEMO-001',
+    customer: 'Demo Customer',
+    origin: 'Munich, DE',
+    destination: 'Berlin, DE',
+    carrier: 'DHL Express',
+    status: 'on_track',
+    priority: 'high',
+    progress: 75,
+    riskScore: 2.1,
+    eta: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
+    currentLocation: 'Leipzig Hub',
+    lastUpdate: '2 min ago',
+    weight: '245 kg',
+    value: '€12,500',
+    alerts: []
+  },
+  {
+    id: 'DE-DEMO-002',
+    customer: 'Sample Corp',
+    origin: 'Stuttgart, DE',
+    destination: 'Hamburg, DE',
+    carrier: 'DPD Deutschland',
+    status: 'at_risk',
+    priority: 'medium',
+    progress: 45,
+    riskScore: 6.8,
+    eta: new Date(Date.now() + 10 * 60 * 60 * 1000).toISOString(),
+    currentLocation: 'Frankfurt Hub',
+    lastUpdate: '15 min ago',
+    weight: '180 kg',
+    value: '€8,750',
+    alerts: ['weather', 'traffic']
+  }
+]
+
+const fallbackCarriers = [
+  { id: 1, name: 'DHL Express', performance: 96.2, onTime: 94, activeShipments: 156 },
+  { id: 2, name: 'DPD Deutschland', performance: 94.8, onTime: 92, activeShipments: 89 },
+  { id: 3, name: 'UPS Germany', performance: 93.5, onTime: 90, activeShipments: 67 }
+]
+
+const fallbackActivities = [
+  {
+    id: 1,
+    type: 'update',
+    message: 'Order DE-DEMO-001 departed from Munich facility',
+    timestamp: new Date().toLocaleTimeString('de-DE'),
+    severity: 'low'
+  },
+  {
+    id: 2,
+    type: 'alert',
+    message: 'Weather delay detected for Route A7',
+    timestamp: new Date().toLocaleTimeString('de-DE'),
+    severity: 'medium'
+  }
+]
+
 // Reactive data
 const displayedOrders = ref([])
-const carriers = ref(mockCarriers || [])
+const carriers = ref([])
 const activities = ref([])
 const selectedOrder = ref(null)
 const deliveryChart = ref(null)
@@ -214,7 +280,13 @@ onMounted(async () => {
   try {
     console.log('🚛 SCM Dashboard mounting...')
     await loadInitialData()
+    
+    // Use nextTick to ensure DOM is ready
+    await nextTick()
+    
+    // Initialize charts after DOM is ready
     await initializeCharts()
+    
     startLiveUpdates()
     updateSyncTime()
     loaded.value = true
@@ -222,6 +294,7 @@ onMounted(async () => {
   } catch (err) {
     console.error('❌ SCM Dashboard mount error:', err)
     error.value = `Failed to load dashboard: ${err.message}`
+    loaded.value = true // Still show the component even if charts fail
   }
 })
 
@@ -252,14 +325,25 @@ function retry() {
 function loadInitialData() {
   try {
     console.log('📊 Loading SCM data...')
-    displayedOrders.value = (mockOrders || []).slice(0, 9)
-    activities.value = (mockActivities || []).slice(0, 10)
-    carriers.value = mockCarriers || []
+    
+    // Try to use mock data, fallback to embedded data if not available
+    displayedOrders.value = (mockOrders || fallbackOrders).slice(0, 9)
+    activities.value = (mockActivities || fallbackActivities).slice(0, 10)
+    carriers.value = mockCarriers || fallbackCarriers
+    
     updateStats()
-    console.log('✅ Data loaded:', { orders: displayedOrders.value.length, activities: activities.value.length })
+    console.log('✅ Data loaded:', { 
+      orders: displayedOrders.value.length, 
+      activities: activities.value.length,
+      carriers: carriers.value.length 
+    })
   } catch (err) {
-    console.error('❌ Data loading error:', err)
-    throw new Error(`Data loading failed: ${err.message}`)
+    console.error('❌ Data loading error, using fallback data:', err)
+    // Use fallback data if everything fails
+    displayedOrders.value = fallbackOrders.slice(0, 9)
+    activities.value = fallbackActivities.slice(0, 10)
+    carriers.value = fallbackCarriers
+    updateStats()
   }
 }
 
@@ -284,7 +368,7 @@ function initializeCharts() {
     // Wait for DOM to be ready
     setTimeout(() => {
       // Delivery Status Chart
-      const deliveryElement = document.querySelector('[ref="deliveryChart"]')
+      const deliveryElement = document.getElementById('deliveryChart')
       if (deliveryElement) {
         const deliveryCtx = deliveryElement.getContext('2d')
         new Chart(deliveryCtx, {
@@ -313,10 +397,13 @@ function initializeCharts() {
             }
           }
         })
+        console.log('✅ Delivery chart initialized')
+      } else {
+        console.warn('⚠️ Delivery chart canvas not found')
       }
 
       // Risk Factors Chart
-      const riskElement = document.querySelector('[ref="riskChart"]')
+      const riskElement = document.getElementById('riskChart')
       if (riskElement) {
         const riskCtx = riskElement.getContext('2d')
         new Chart(riskCtx, {
@@ -353,13 +440,16 @@ function initializeCharts() {
             }
           }
         })
+        console.log('✅ Risk chart initialized')
+      } else {
+        console.warn('⚠️ Risk chart canvas not found')
       }
       
-      console.log('✅ Charts initialized')
-    }, 100)
+      console.log('✅ All charts initialized')
+    }, 500) // Increased timeout for better DOM readiness
   } catch (err) {
     console.error('❌ Chart initialization error:', err)
-    throw new Error(`Charts failed to initialize: ${err.message}`)
+    // Don't throw error - let component load without charts if needed
   }
 }
 
@@ -411,12 +501,52 @@ function generateReport() {
   alert('📄 PDF Report Generated!\n\nDemo feature: In production, this would generate a comprehensive logistics report with all order data, carrier metrics, and risk analysis.')
 }
 
-function exportCSV() {
-  alert('📊 CSV Export Complete!\n\nDemo feature: Order data exported to CSV format. In production, this would download a file with all current shipment data.')
+function generateDeliveryReport() {
+  alert('📋 Delivery Report Generated!\n\nDemo feature: Comprehensive delivery performance report with KPIs, carrier analytics, and route optimization insights. In production, this would generate a detailed PDF with delivery metrics, on-time performance, and improvement recommendations.')
 }
 
-function scheduleReturn() {
-  alert('↩️ Return Shipment Scheduled!\n\nDemo feature: Return logistics workflow initiated. In production, this would integrate with carrier APIs to schedule return pickups.')
+function simulateReturnOrder() {
+  // Simulate creating a return order
+  const returnOrder = {
+    id: `RET-${Date.now()}`,
+    originalOrderId: displayedOrders.value[0]?.id || 'ORD-12345',
+    status: 'return_initiated',
+    returnReason: 'Customer Request',
+    pickup: {
+      location: 'Berlin, Germany',
+      scheduledDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toLocaleDateString('de-DE')
+    },
+    destination: 'Hamburg Logistics Center',
+    carrier: 'DHL Express',
+    riskScore: 2.1,
+    lastUpdate: 'Just now'
+  }
+
+  // Add return order to beginning of orders list
+  displayedOrders.value.unshift(returnOrder)
+  
+  // Add activity for return order creation
+  activities.value.unshift({
+    id: Date.now(),
+    type: 'return_initiated',
+    orderId: returnOrder.id,
+    message: `🔄 Return order ${returnOrder.id} created for original order ${returnOrder.originalOrderId}`,
+    timestamp: new Date().toLocaleTimeString('de-DE'),
+    severity: 'medium'
+  })
+  
+  // Keep only last 15 activities
+  if (activities.value.length > 15) {
+    activities.value = activities.value.slice(0, 15)
+  }
+  
+  updateStats()
+  
+  alert('🔄 Return Order Simulated!\n\nDemo feature: Return logistics workflow initiated with pickup scheduling and carrier assignment. New return order added to tracking dashboard.')
+}
+
+function exportCSV() {
+  alert('📊 CSV Export Complete!\n\nDemo feature: Order data exported to CSV format. In production, this would download a file with all current shipment data.')
 }
 
 function simulateOrderUpdate(order) {
@@ -510,3 +640,39 @@ function updateOrderStatus() {
   alert('🔄 Order Status Update Complete!\n\nDemo feature: Real-time status updates applied to shipments based on carrier APIs, weather data, and traffic conditions.')
 }
 </script>
+
+<style scoped>
+/* Chart container styles */
+.chart-container {
+  width: 65%;
+  margin: 0 auto;
+  padding: 1rem;
+  max-height: 380px;
+}
+
+/* Risk score indicator */
+.risk-indicator {
+  transition: all 0.3s ease;
+}
+
+/* Activity feed animations */
+.activity-enter-active {
+  transition: all 0.3s ease;
+}
+.activity-enter-from {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* Custom scrollbar for activity feed */
+.feed-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.feed-scroll::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);
+}
+.feed-scroll::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.5);
+  border-radius: 4px;
+}
+</style>

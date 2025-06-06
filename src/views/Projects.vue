@@ -92,13 +92,62 @@
 
                 <!-- Other projects with preview images or charts -->
                 <div v-else class="generic-preview">
-                  <img v-if="project.previewImage" 
-                       :src="project.previewImage" 
-                       :alt="project.title"
-                       class="preview-image w-full h-48 object-cover rounded-lg mb-4" />
-                  <div v-else class="placeholder-preview">
-                    <div class="preview-icon">{{ getProjectIcon(project) }}</div>
-                    <div class="preview-text">{{ project.title }}</div>
+                  <!-- Terraform Infrastructure Diagram -->
+                  <div v-if="project.id === 'terraform-aws-suite'" class="architecture-container">
+                    <div class="infrastructure-diagram">
+                      <div class="infra-node vpc">
+                        <div class="node-icon">🏗️</div>
+                        <div class="node-text">VPC</div>
+                      </div>
+                      <div class="infra-node ecs">
+                        <div class="node-icon">🐳</div>
+                        <div class="node-text">ECS</div>
+                      </div>
+                      <div class="infra-node rds">
+                        <div class="node-icon">🗄️</div>
+                        <div class="node-text">RDS</div>
+                      </div>
+                      <div class="infra-node waf">
+                        <div class="node-icon">🛡️</div>
+                        <div class="node-text">WAF</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- AWS Calculator Interface -->
+                  <div v-else-if="project.id === 'aws-cost-calculator'" class="calculator-container">
+                    <div class="calculator-interface">
+                      <div class="calc-header">
+                        <div class="calc-title">💰 AWS Calculator</div>
+                        <div class="calc-region">us-east-1</div>
+                      </div>
+                      <div class="calc-services">
+                        <div class="service-row">
+                          <span class="service-name">EC2</span>
+                          <span class="service-cost">$24.56</span>
+                        </div>
+                        <div class="service-row">
+                          <span class="service-name">RDS</span>
+                          <span class="service-cost">$18.32</span>
+                        </div>
+                      </div>
+                      <div class="calc-total">
+                        <span class="total-label">Monthly Total</span>
+                        <span class="total-amount">$55.32</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Default Preview Image -->
+                  <div v-else>
+                    <img v-if="project.previewImage" 
+                         :src="project.previewImage" 
+                         :alt="project.title"
+                         class="preview-image w-full h-48 object-cover rounded-lg mb-4" />
+                    <div v-else class="placeholder-preview">
+                      <div class="preview-icon">{{ getProjectIcon(project) }}</div>
+                      <div class="preview-text">{{ project.title }}</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -134,360 +183,6 @@
                    :href="project.liveDemo || project.demo" 
                    target="_blank" 
                    class="btn-primary">
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div class="text-center">
-          <div class="glass-card p-8 inline-block">
-            <h3 class="text-2xl font-bold mb-4 gradient-text">Explore My GitHub for More</h3>
-            <p class="text-light-text mb-6">Discover additional projects, contributions, and open-source work</p>
-            <a 
-              href="https://github.com/iamruwainkelly" 
-              target="_blank" 
-              class="btn-primary text-lg px-8 py-4"
-            >
-              <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-              </svg>
-              Visit GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-          <div class="project-card group">
-            <div class="project-card-inner">
-              <!-- Interactive Charts with Chart.js -->
-              <div class="charts-container mb-6">
-                <div class="chart-grid">
-                  <!-- Cost by Service Pie Chart -->
-                  <div class="chart-item">
-                    <canvas 
-                      ref="costByServiceChart" 
-                      class="chart-canvas"
-                    ></canvas>
-                    <div class="chart-label">Service Costs</div>
-                  </div>
-                  
-                  <!-- Monthly Usage Bar Chart -->
-                  <div class="chart-item">
-                    <canvas 
-                      ref="monthlyUsageChart" 
-                      class="chart-canvas"
-                    ></canvas>
-                    <div class="chart-label">Monthly Usage</div>
-                  </div>
-                  
-                  <!-- Cost Trend Line Chart -->
-                  <div class="chart-item">
-                    <canvas 
-                      ref="costTrendChart" 
-                      class="chart-canvas"
-                    ></canvas>
-                    <div class="chart-label">Cost Trend</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[0].title }}</h2>
-              <p class="text-light-text mb-2">{{ projects[0].subtitle }}</p>
-              <p class="text-light-text mb-4">{{ projects[0].description }}</p>
-              
-              <!-- Metrics Display -->
-              <div class="metrics-grid mb-6">
-                <div v-for="(value, key) in projects[0].mockData" :key="key" class="metric-item">
-                  <div class="metric-value">{{ value }}</div>
-                  <div class="metric-label">{{ formatMetricLabel(key) }}</div>
-                </div>
-              </div>
-              
-              <!-- Tech Stack Badges -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in projects[0].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex gap-4">
-                <a 
-                  :href="projects[0].github" 
-                  target="_blank" 
-                  class="btn-secondary"
-                >
-                  <CodeBracketIcon class="w-4 h-4" />
-                  View GitHub
-                </a>
-                <router-link v-if="projects[0].liveDemo && projects[0].liveDemo.startsWith('/')"
-                  :to="projects[0].liveDemo" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </router-link>
-                <a v-else-if="projects[0].liveDemo"
-                  :href="projects[0].liveDemo" 
-                  target="_blank" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 2: Terraform AWS Infrastructure Suite -->
-          <div class="project-card group">
-            <div class="project-card-inner">
-              <!-- Interactive Architecture Diagram -->
-              <div class="architecture-container mb-6">
-                <div class="infrastructure-diagram">
-                  <div class="infra-node vpc" @click="showArchitectureDetail('vpc')">
-                    <div class="node-icon">🏗️</div>
-                    <div class="node-text">VPC</div>
-                  </div>
-                  <div class="infra-node ecs" @click="showArchitectureDetail('ecs')">
-                    <div class="node-icon">🐳</div>
-                    <div class="node-text">ECS</div>
-                  </div>
-                  <div class="infra-node rds" @click="showArchitectureDetail('rds')">
-                    <div class="node-icon">🗄️</div>
-                    <div class="node-text">RDS</div>
-                  </div>
-                  <div class="infra-node waf" @click="showArchitectureDetail('waf')">
-                    <div class="node-icon">🛡️</div>
-                    <div class="node-text">WAF</div>
-                  </div>
-                  <div class="infra-connections">
-                    <div class="connection-line"></div>
-                    <div class="connection-line vertical"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[1].title }}</h2>
-              <p class="text-light-text mb-2">{{ projects[1].subtitle }}</p>
-              <p class="text-light-text mb-4">{{ projects[1].description }}</p>
-              
-              <!-- Metrics Display -->
-              <div class="metrics-grid mb-6">
-                <div v-for="(value, key) in projects[1].mockData" :key="key" class="metric-item">
-                  <div class="metric-value">{{ value }}</div>
-                  <div class="metric-label">{{ formatMetricLabel(key) }}</div>
-                </div>
-              </div>
-              
-              <!-- Tech Stack Badges -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in projects[1].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex gap-4">
-                <a 
-                  :href="projects[1].github" 
-                  target="_blank" 
-                  class="btn-secondary"
-                >
-                  <CodeBracketIcon class="w-4 h-4" />
-                  View GitHub
-                </a>
-                <router-link v-if="projects[1].liveDemo && projects[1].liveDemo.startsWith('/')"
-                  :to="projects[1].liveDemo" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </router-link>
-                <a v-else-if="projects[1].liveDemo"
-                  :href="projects[1].liveDemo" 
-                  target="_blank" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </a>
-                <router-link v-else-if="projects[1].caseStudy"
-                  :to="projects[1].caseStudy" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Case Study
-                </router-link>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 3: AWS Cost Calculator -->
-          <div class="project-card group">
-            <div class="project-card-inner">
-              <!-- Calculator Interface Mockup -->
-              <div class="calculator-container mb-6">
-                <div class="calculator-interface">
-                  <div class="calc-header">
-                    <div class="calc-title">AWS Calculator</div>
-                    <div class="calc-region">us-east-1</div>
-                  </div>
-                  <div class="calc-services">
-                    <div class="service-row">
-                      <span class="service-name">EC2</span>
-                      <span class="service-cost">$24.56</span>
-                    </div>
-                    <div class="service-row">
-                      <span class="service-name">RDS</span>
-                      <span class="service-cost">$18.32</span>
-                    </div>
-                    <div class="service-row">
-                      <span class="service-name">S3</span>
-                      <span class="service-cost">$12.44</span>
-                    </div>
-                  </div>
-                  <div class="calc-total">
-                    <span class="total-label">Monthly Total</span>
-                    <span class="total-amount">$55.32</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[2].title }}</h2>
-              <p class="text-light-text mb-2">{{ projects[2].subtitle }}</p>
-              <p class="text-light-text mb-4">{{ projects[2].description }}</p>
-              
-              <!-- Metrics Display -->
-              <div class="metrics-grid mb-6">
-                <div v-for="(value, key) in projects[2].mockData" :key="key" class="metric-item">
-                  <div class="metric-value">{{ value }}</div>
-                  <div class="metric-label">{{ formatMetricLabel(key) }}</div>
-                </div>
-              </div>
-              
-              <!-- Tech Stack Badges -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in projects[2].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex gap-4">
-                <a 
-                  :href="projects[2].github" 
-                  target="_blank" 
-                  class="btn-secondary"
-                >
-                  <CodeBracketIcon class="w-4 h-4" />
-                  View GitHub
-                </a>
-                <router-link v-if="projects[2].liveDemo && projects[2].liveDemo.startsWith('/')"
-                  :to="projects[2].liveDemo" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </router-link>
-                <a v-else-if="projects[2].liveDemo"
-                  :href="projects[2].liveDemo" 
-                  target="_blank" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 4: SCM Order Tracker -->
-          <div class="project-card group">
-            <div class="project-card-inner">
-              <!-- Live SCM Dashboard Preview -->
-              <div class="scm-container mb-6">
-                <div class="scm-header">
-                  <div class="scm-title">🚛 SCM Order Tracker</div>
-                  <div class="scm-live-indicator">
-                    <div class="live-dot"></div>
-                    <span>Live</span>
-                  </div>
-                </div>
-                <div class="scm-kpis">
-                  <div class="kpi-item">
-                    <div class="kpi-value">{{ projects?.[3]?.mockData?.ordersTracked || '2,347' }}</div>
-                    <div class="kpi-label">Orders Tracked</div>
-                  </div>
-                  <div class="kpi-item">
-                    <div class="kpi-value">{{ projects?.[3]?.mockData?.onTimeDelivery || '94.2%' }}</div>
-                    <div class="kpi-label">On-Time Rate</div>
-                  </div>
-                  <div class="kpi-item">
-                    <div class="kpi-value">{{ projects?.[3]?.mockData?.activeCarriers || '23' }}</div>
-                    <div class="kpi-label">Active Carriers</div>
-                  </div>
-                </div>
-                <div class="scm-chart">
-                  <canvas ref="scmChart" class="chart-canvas"></canvas>
-                </div>
-              </div>
-
-              <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects?.[3]?.title || 'SCM Order Tracker' }}</h2>
-              <p class="text-light-text mb-2">{{ projects?.[3]?.subtitle || 'Real-time order tracking' }}</p>
-              <p class="text-light-text mb-4">{{ projects?.[3]?.description || 'Supply chain management dashboard' }}</p>
-              
-              <!-- Real-time Features -->
-              <div class="features-grid mb-6">
-                <div class="feature-item">
-                  <div class="feature-icon">📊</div>
-                  <div class="feature-text">Real-time Analytics</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🎯</div>
-                  <div class="feature-text">Risk Prediction</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">🗺️</div>
-                  <div class="feature-text">Route Tracking</div>
-                </div>
-                <div class="feature-item">
-                  <div class="feature-icon">⚠️</div>
-                  <div class="feature-text">Alert System</div>
-                </div>
-              </div>
-              
-              <!-- Tech Stack Badges -->
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in (projects?.[3]?.technologies || [])" :key="tech" class="tech-badge">{{ tech }}</span>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex gap-4">
-                <a 
-                  :href="projects?.[3]?.github || '#'" 
-                  target="_blank" 
-                  class="btn-secondary"
-                >
-                  <CodeBracketIcon class="w-4 h-4" />
-                  View GitHub
-                </a>
-                <router-link v-if="projects?.[3]?.liveDemo && projects?.[3]?.liveDemo.startsWith('/')"
-                  :to="projects?.[3]?.liveDemo" 
-                  class="btn-primary"
-                >
-                  <EyeIcon class="w-4 h-4" />
-                  Live Demo
-                </router-link>
-                <a v-else-if="projects?.[3]?.liveDemo"
-                  :href="projects?.[3]?.liveDemo" 
-                  target="_blank" 
-                  class="btn-primary"
-                >
                   <EyeIcon class="w-4 h-4" />
                   Live Demo
                 </a>
@@ -707,163 +402,6 @@ onMounted(async () => {
     initializeCharts()
   }, 100)
 })
-
-const initializeCharts = () => {
-  try {
-  // Cost by Service Pie Chart
-  if (costByServiceChart.value) {
-    const ctx1 = costByServiceChart.value.getContext('2d')
-    charts.costByService = new Chart(ctx1, {
-      type: 'pie',
-      data: {
-        labels: projects.value[0].charts.costByService.labels,
-        datasets: [{
-          data: projects.value[0].charts.costByService.data,
-          backgroundColor: [
-            '#ff6c00',
-            '#a678ff',
-            '#4ade80',
-            '#f59e0b'
-          ],
-          borderColor: [
-            '#ff6c00',
-            '#a678ff',
-            '#4ade80',
-            '#f59e0b'
-          ],
-          borderWidth: 2,
-          hoverOffset: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.label + ': ' + context.parsed + '%'
-              }
-            }
-          }
-        }
-      }
-    })
-  }
-
-  // Monthly Usage Bar Chart
-  if (monthlyUsageChart.value) {
-    const ctx2 = monthlyUsageChart.value.getContext('2d')
-    charts.monthlyUsage = new Chart(ctx2, {
-      type: 'bar',
-      data: {
-        labels: projects.value[0].charts.monthlyUsage.labels,
-        datasets: [{
-          data: projects.value[0].charts.monthlyUsage.data,
-          backgroundColor: 'rgba(255, 108, 0, 0.7)',
-          borderColor: '#ff6c00',
-          borderWidth: 1,
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            display: false
-          },
-          x: {
-            display: false
-          }
-        }
-      }
-    })
-  }
-
-  // Cost Trend Line Chart
-  if (costTrendChart.value) {
-    const ctx3 = costTrendChart.value.getContext('2d')
-    charts.costTrend = new Chart(ctx3, {
-      type: 'line',
-      data: {
-        labels: projects.value[0].charts.costTrend.labels,
-        datasets: [{
-          data: projects.value[0].charts.costTrend.data,
-          borderColor: '#a678ff',
-          backgroundColor: 'rgba(166, 120, 255, 0.1)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4,
-          pointBackgroundColor: '#a678ff',
-          pointBorderColor: '#fff',
-          pointBorderWidth: 2,
-          pointRadius: 3
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            display: false
-          },
-          x: {
-            display: false
-          }
-        }
-      }
-    })
-  }
-
-  // SCM Order Tracker Chart
-  if (scmChart.value && projects.value.length > 3 && projects.value[3].charts) {
-    const ctx4 = scmChart.value.getContext('2d')
-    charts.scm = new Chart(ctx4, {
-      type: 'doughnut',
-      data: {
-        labels: projects.value[3].charts.deliveryStatus.labels,
-        datasets: [{
-          data: projects.value[3].charts.deliveryStatus.data,
-          backgroundColor: [
-            '#10b981', // On Track - Green
-            '#f59e0b', // At Risk - Yellow
-            '#ef4444', // Delayed - Red
-            '#8b5cf6'  // Delivered - Purple
-          ],
-          borderWidth: 0,
-          hoverOffset: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        cutout: '60%'
-      }
-    })
-  }
-  } catch (error) {
-    console.error('Error initializing charts:', error)
-  }
-}
 
 // Helper function to format metric labels
 const formatMetricLabel = (key) => {
