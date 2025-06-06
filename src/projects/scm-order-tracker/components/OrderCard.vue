@@ -7,7 +7,9 @@
         <h3 class="text-lg font-semibold text-white">{{ order.id }}</h3>
         <p class="text-sm text-gray-400">{{ order.destination }}</p>
       </div>
-      <StatusBadge :status="order.status" />
+      <div @click.stop="$emit('change-status', order)" class="cursor-pointer hover:scale-105 transition-transform">
+        <StatusBadge :status="order.status" />
+      </div>
     </div>
 
     <!-- Progress Bar -->
@@ -80,7 +82,7 @@ defineProps({
   }
 })
 
-defineEmits(['view-details'])
+defineEmits(['view-details', 'change-status'])
 
 function formatETA(eta) {
   const date = new Date(eta)

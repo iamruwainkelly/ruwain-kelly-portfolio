@@ -29,7 +29,7 @@
       </div>
       <div class="flex justify-between text-sm">
         <span class="text-gray-400">Cost Efficiency</span>
-        <span class="text-white font-medium">${{ carrier.costPerMile }}/mi</span>
+        <span class="text-white font-medium">{{ carrier.costPerMile }}/mi</span>
       </div>
     </div>
 

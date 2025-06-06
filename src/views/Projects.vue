@@ -263,6 +263,96 @@
               </div>
             </div>
           </div>
+
+          <!-- Project 4: SCM Order Tracker -->
+          <div class="project-card group">
+            <div class="project-card-inner">
+              <!-- Live SCM Dashboard Preview -->
+              <div class="scm-container mb-6">
+                <div class="scm-header">
+                  <div class="scm-title">🚛 SCM Order Tracker</div>
+                  <div class="scm-live-indicator">
+                    <div class="live-dot"></div>
+                    <span>Live</span>
+                  </div>
+                </div>
+                <div class="scm-kpis">
+                  <div class="kpi-item">
+                    <div class="kpi-value">{{ projects[3].mockData.ordersTracked }}</div>
+                    <div class="kpi-label">Orders Tracked</div>
+                  </div>
+                  <div class="kpi-item">
+                    <div class="kpi-value">{{ projects[3].mockData.onTimeDelivery }}</div>
+                    <div class="kpi-label">On-Time Rate</div>
+                  </div>
+                  <div class="kpi-item">
+                    <div class="kpi-value">{{ projects[3].mockData.activeCarriers }}</div>
+                    <div class="kpi-label">Active Carriers</div>
+                  </div>
+                </div>
+                <div class="scm-chart">
+                  <canvas ref="scmChart" class="chart-canvas"></canvas>
+                </div>
+              </div>
+
+              <!-- Project Info -->
+              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[3].title }}</h2>
+              <p class="text-light-text mb-2">{{ projects[3].subtitle }}</p>
+              <p class="text-light-text mb-4">{{ projects[3].description }}</p>
+              
+              <!-- Real-time Features -->
+              <div class="features-grid mb-6">
+                <div class="feature-item">
+                  <div class="feature-icon">📊</div>
+                  <div class="feature-text">Real-time Analytics</div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">🎯</div>
+                  <div class="feature-text">Risk Prediction</div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">🗺️</div>
+                  <div class="feature-text">Route Tracking</div>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">⚠️</div>
+                  <div class="feature-text">Alert System</div>
+                </div>
+              </div>
+              
+              <!-- Tech Stack Badges -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span v-for="tech in projects[3].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-4">
+                <a 
+                  :href="projects[3].github" 
+                  target="_blank" 
+                  class="btn-secondary"
+                >
+                  <CodeBracketIcon class="w-4 h-4" />
+                  View GitHub
+                </a>
+                <router-link v-if="projects[3].liveDemo && projects[3].liveDemo.startsWith('/')"
+                  :to="projects[3].liveDemo" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </router-link>
+                <a v-else-if="projects[3].liveDemo"
+                  :href="projects[3].liveDemo" 
+                  target="_blank" 
+                  class="btn-primary"
+                >
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Bottom CTA -->
@@ -327,6 +417,7 @@ Chart.register(
 const costByServiceChart = ref(null)
 const monthlyUsageChart = ref(null)
 const costTrendChart = ref(null)
+const scmChart = ref(null)
 
 // Projects data
 const projects = ref(projectsData)
@@ -335,7 +426,8 @@ const projects = ref(projectsData)
 let charts = {
   costByService: null,
   monthlyUsage: null,
-  costTrend: null
+  costTrend: null,
+  scm: null
 }
 
 // Initialize charts after component mounts
@@ -463,6 +555,38 @@ const initializeCharts = () => {
             display: false
           }
         }
+      }
+    })
+  }
+
+  // SCM Order Tracker Chart
+  if (scmChart.value) {
+    const ctx4 = scmChart.value.getContext('2d')
+    charts.scm = new Chart(ctx4, {
+      type: 'doughnut',
+      data: {
+        labels: projects.value[3].charts.deliveryStatus.labels,
+        datasets: [{
+          data: projects.value[3].charts.deliveryStatus.data,
+          backgroundColor: [
+            '#10b981', // On Track - Green
+            '#f59e0b', // At Risk - Yellow
+            '#ef4444', // Delayed - Red
+            '#8b5cf6'  // Delivered - Purple
+          ],
+          borderWidth: 0,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        cutout: '60%'
       }
     })
   }
@@ -1106,6 +1230,134 @@ onUnmounted(cleanup)
   }
 }
 
+/* SCM Order Tracker Styles */
+.scm-container {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 1rem;
+}
+
+.scm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.scm-title {
+  font-weight: 600;
+  color: #10b981;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scm-live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #10b981;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+.scm-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.kpi-item {
+  text-align: center;
+  background: rgba(16, 185, 129, 0.05);
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.kpi-value {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #10b981;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-label {
+  font-size: 0.6rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scm-chart {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(16, 185, 129, 0.1);
+  transform: translateY(-1px);
+}
+
+.feature-icon {
+  font-size: 1rem;
+}
+
+.feature-text {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .project-card-inner {
@@ -1187,6 +1439,21 @@ onUnmounted(cleanup)
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
+
+  /* SCM Responsive - Tablet */
+  .scm-kpis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .scm-chart {
+    height: 60px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1202,6 +1469,28 @@ onUnmounted(cleanup)
   
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* SCM Responsive - Mobile */
+  .scm-kpis {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .kpi-value {
+    font-size: 0.75rem;
+  }
+  
+  .kpi-label {
+    font-size: 0.55rem;
+  }
+  
+  .scm-title {
+    font-size: 0.75rem;
+  }
+  
+  .scm-chart {
+    height: 50px;
   }
 }
 </style>
