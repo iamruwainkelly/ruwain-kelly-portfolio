@@ -105,11 +105,25 @@
       <section class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
           <div class="glass-card p-8 lg:p-12 text-center animate-fade-in-up" style="animation-delay: 1.4s;">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">Ready to move your operations into the future?</h2>
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Ready to Transform Your Operations?</h2>
+            <p class="text-light-text text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+              Multi-disciplinary engineer bridging supply chain operations, ERP architecture, and backend development. 
+              I specialize in digitizing procurement workflows, automating warehouse operations, and creating seamless 
+              integrations between legacy ERP systems and modern AI-driven ops.
+            </p>
+            <p class="text-light-text text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+              With 15+ years of hands-on delivery across SAP, SYSPRO, SAGE, and AI Backend systems, I architect solutions 
+              that don't just work—they transform how organizations operate at scale. Whether you need AI-powered forecasting 
+              engines, real-time inventory dashboards, or full ERP-to-cloud migrations, I deliver measurable results: 
+              40% faster reporting, 22% improved fulfillment, 20% warehouse efficiency gains.
+            </p>
+            <p class="text-accent text-lg font-semibold mb-8">
+              Let's discuss how I can help solve your operational complexity with intelligent, scalable technology.
+            </p>
             <div class="flex flex-wrap gap-4 justify-center">
               <router-link to="/contact" 
                            class="bg-gradient-primary hover:bg-gradient-secondary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                Let's Talk
+                Start a Conversation
               </router-link>
               <router-link to="/projects" 
                            class="border-2 border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
