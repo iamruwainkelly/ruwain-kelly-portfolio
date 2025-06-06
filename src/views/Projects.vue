@@ -20,8 +20,149 @@
         </div>
 
         <!-- Projects Grid -->
-        <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-16">
-          <!-- Project 1: AWS Serverless Cost Intelligence Dashboard -->
+        <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-8 mb-16">
+          <!-- Dynamic Project Cards -->
+          <div v-for="project in projects" :key="project.slug || project.id" class="project-card group">
+            <div class="project-card-inner">
+              <!-- Project Preview Image or Charts -->
+              <div class="project-preview mb-6">
+                <!-- Special Chart Rendering for AWS Dashboard -->
+                <div v-if="project.id === 'serverless-dashboard'" class="charts-container">
+                  <div class="chart-grid">
+                    <div class="chart-item">
+                      <canvas :ref="'costByServiceChart'" class="chart-canvas"></canvas>
+                      <div class="chart-label">Service Costs</div>
+                    </div>
+                    <div class="chart-item">
+                      <canvas :ref="'monthlyUsageChart'" class="chart-canvas"></canvas>
+                      <div class="chart-label">Monthly Usage</div>
+                    </div>
+                    <div class="chart-item">
+                      <canvas :ref="'costTrendChart'" class="chart-canvas"></canvas>
+                      <div class="chart-label">Cost Trends</div>
+                    </div>
+                  </div>
+                  <div class="metrics-grid">
+                    <div class="metric-item">
+                      <div class="metric-value">{{ project.mockData?.costSavings || '$23,450' }}</div>
+                      <div class="metric-label">Cost Savings</div>
+                    </div>
+                    <div class="metric-item">
+                      <div class="metric-value">{{ project.mockData?.monitored || '156' }}</div>
+                      <div class="metric-label">Functions</div>
+                    </div>
+                    <div class="metric-item">
+                      <div class="metric-value">{{ project.mockData?.alerts || '24' }}</div>
+                      <div class="metric-label">Active Alerts</div>
+                    </div>
+                    <div class="metric-item">
+                      <div class="metric-value">{{ project.mockData?.accuracy || '94.7%' }}</div>
+                      <div class="metric-label">Accuracy</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Special SCM Dashboard Rendering -->
+                <div v-else-if="project.id === 'scm-order-tracker'" class="scm-container">
+                  <div class="scm-header">
+                    <div class="scm-title">🚛 SCM Order Tracker</div>
+                    <div class="scm-live-indicator">
+                      <div class="live-dot"></div>
+                      <span>Live</span>
+                    </div>
+                  </div>
+                  <div class="scm-kpis">
+                    <div class="kpi-item">
+                      <div class="kpi-value">{{ project.mockData?.ordersTracked || '2,347' }}</div>
+                      <div class="kpi-label">Orders Tracked</div>
+                    </div>
+                    <div class="kpi-item">
+                      <div class="kpi-value">{{ project.mockData?.onTimeDelivery || '94.2%' }}</div>
+                      <div class="kpi-label">On-Time Rate</div>
+                    </div>
+                    <div class="kpi-item">
+                      <div class="kpi-value">{{ project.mockData?.activeCarriers || '23' }}</div>
+                      <div class="kpi-label">Active Carriers</div>
+                    </div>
+                  </div>
+                  <div class="scm-chart-container">
+                    <canvas :ref="'scmChart'" class="scm-chart-canvas"></canvas>
+                  </div>
+                </div>
+
+                <!-- Other projects with preview images or charts -->
+                <div v-else class="generic-preview">
+                  <img v-if="project.previewImage" 
+                       :src="project.previewImage" 
+                       :alt="project.title"
+                       class="preview-image w-full h-48 object-cover rounded-lg mb-4" />
+                  <div v-else class="placeholder-preview">
+                    <div class="preview-icon">{{ getProjectIcon(project) }}</div>
+                    <div class="preview-text">{{ project.title }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project Info -->
+              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ project.title }}</h2>
+              <p class="text-light-text mb-2">{{ project.subtitle }}</p>
+              <p class="text-light-text mb-4">{{ project.description }}</p>
+              
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span v-for="tag in (project.tags || project.technologies || [])" 
+                      :key="tag" 
+                      class="tech-badge">{{ tag }}</span>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-4">
+                <a v-if="project.github" 
+                   :href="project.github" 
+                   target="_blank" 
+                   class="btn-secondary">
+                  <CodeBracketIcon class="w-4 h-4" />
+                  View GitHub
+                </a>
+                <router-link v-if="(project.liveDemo || project.demo) && (project.liveDemo || project.demo).startsWith('/')"
+                             :to="project.liveDemo || project.demo" 
+                             class="btn-primary">
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </router-link>
+                <a v-else-if="project.liveDemo || project.demo"
+                   :href="project.liveDemo || project.demo" 
+                   target="_blank" 
+                   class="btn-primary">
+                  <EyeIcon class="w-4 h-4" />
+                  Live Demo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="text-center">
+          <div class="glass-card p-8 inline-block">
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Explore My GitHub for More</h3>
+            <p class="text-light-text mb-6">Discover additional projects, contributions, and open-source work</p>
+            <a 
+              href="https://github.com/iamruwainkelly" 
+              target="_blank" 
+              class="btn-primary text-lg px-8 py-4"
+            >
+              <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Visit GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
           <div class="project-card group">
             <div class="project-card-inner">
               <!-- Interactive Charts with Chart.js -->
@@ -278,15 +419,15 @@
                 </div>
                 <div class="scm-kpis">
                   <div class="kpi-item">
-                    <div class="kpi-value">{{ projects[3].mockData.ordersTracked }}</div>
+                    <div class="kpi-value">{{ projects?.[3]?.mockData?.ordersTracked || '2,347' }}</div>
                     <div class="kpi-label">Orders Tracked</div>
                   </div>
                   <div class="kpi-item">
-                    <div class="kpi-value">{{ projects[3].mockData.onTimeDelivery }}</div>
+                    <div class="kpi-value">{{ projects?.[3]?.mockData?.onTimeDelivery || '94.2%' }}</div>
                     <div class="kpi-label">On-Time Rate</div>
                   </div>
                   <div class="kpi-item">
-                    <div class="kpi-value">{{ projects[3].mockData.activeCarriers }}</div>
+                    <div class="kpi-value">{{ projects?.[3]?.mockData?.activeCarriers || '23' }}</div>
                     <div class="kpi-label">Active Carriers</div>
                   </div>
                 </div>
@@ -296,9 +437,9 @@
               </div>
 
               <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects[3].title }}</h2>
-              <p class="text-light-text mb-2">{{ projects[3].subtitle }}</p>
-              <p class="text-light-text mb-4">{{ projects[3].description }}</p>
+              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ projects?.[3]?.title || 'SCM Order Tracker' }}</h2>
+              <p class="text-light-text mb-2">{{ projects?.[3]?.subtitle || 'Real-time order tracking' }}</p>
+              <p class="text-light-text mb-4">{{ projects?.[3]?.description || 'Supply chain management dashboard' }}</p>
               
               <!-- Real-time Features -->
               <div class="features-grid mb-6">
@@ -322,28 +463,28 @@
               
               <!-- Tech Stack Badges -->
               <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in projects[3].technologies" :key="tech" class="tech-badge">{{ tech }}</span>
+                <span v-for="tech in (projects?.[3]?.technologies || [])" :key="tech" class="tech-badge">{{ tech }}</span>
               </div>
 
               <!-- Action Buttons -->
               <div class="flex gap-4">
                 <a 
-                  :href="projects[3].github" 
+                  :href="projects?.[3]?.github || '#'" 
                   target="_blank" 
                   class="btn-secondary"
                 >
                   <CodeBracketIcon class="w-4 h-4" />
                   View GitHub
                 </a>
-                <router-link v-if="projects[3].liveDemo && projects[3].liveDemo.startsWith('/')"
-                  :to="projects[3].liveDemo" 
+                <router-link v-if="projects?.[3]?.liveDemo && projects?.[3]?.liveDemo.startsWith('/')"
+                  :to="projects?.[3]?.liveDemo" 
                   class="btn-primary"
                 >
                   <EyeIcon class="w-4 h-4" />
                   Live Demo
                 </router-link>
-                <a v-else-if="projects[3].liveDemo"
-                  :href="projects[3].liveDemo" 
+                <a v-else-if="projects?.[3]?.liveDemo"
+                  :href="projects?.[3]?.liveDemo" 
                   target="_blank" 
                   class="btn-primary"
                 >
@@ -395,7 +536,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
-import projectsData from '../data/projects.json'
+import projectsData from '@/data/projects.json'
 
 // Register Chart.js components
 Chart.register(
@@ -413,12 +554,6 @@ Chart.register(
   Legend
 )
 
-// Refs for chart canvases
-const costByServiceChart = ref(null)
-const monthlyUsageChart = ref(null)
-const costTrendChart = ref(null)
-const scmChart = ref(null)
-
 // Projects data
 const projects = ref(projectsData)
 
@@ -430,9 +565,19 @@ let charts = {
   scm: null
 }
 
+// Helper function to get project icons
+const getProjectIcon = (project) => {
+  const iconMap = {
+    'serverless-dashboard': '📊',
+    'terraform-aws-suite': '🏗️',
+    'aws-cost-calculator': '💰',
+    'scm-order-tracker': '🚛'
+  }
+  return iconMap[project.id] || '🔧'
+}
+
 // Initialize charts after component mounts
 onMounted(async () => {
-  console.log('Projects component mounted')
   await nextTick()
   setTimeout(() => {
     initializeCharts()
@@ -440,6 +585,131 @@ onMounted(async () => {
 })
 
 const initializeCharts = () => {
+  try {
+    // AWS Serverless Dashboard Charts
+    const awsProject = projects.value.find(p => p.id === 'serverless-dashboard')
+    if (awsProject?.charts) {
+      // Cost by Service Pie Chart
+      const costChart = document.querySelector('[ref="costByServiceChart"]')
+      if (costChart) {
+        const ctx1 = costChart.getContext('2d')
+        charts.costByService = new Chart(ctx1, {
+          type: 'pie',
+          data: {
+            labels: awsProject.charts.costByService.labels,
+            datasets: [{
+              data: awsProject.charts.costByService.data,
+              backgroundColor: ['#ff6c00', '#a678ff', '#4ade80', '#f59e0b'],
+              borderColor: ['#ff6c00', '#a678ff', '#4ade80', '#f59e0b'],
+              borderWidth: 2,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        })
+      }
+
+      // Monthly Usage Bar Chart
+      const usageChart = document.querySelector('[ref="monthlyUsageChart"]')
+      if (usageChart) {
+        const ctx2 = usageChart.getContext('2d')
+        charts.monthlyUsage = new Chart(ctx2, {
+          type: 'bar',
+          data: {
+            labels: awsProject.charts.monthlyUsage.labels,
+            datasets: [{
+              data: awsProject.charts.monthlyUsage.data,
+              backgroundColor: 'rgba(255, 108, 0, 0.7)',
+              borderColor: '#ff6c00',
+              borderWidth: 1,
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { display: false }, x: { display: false } }
+          }
+        })
+      }
+
+      // Cost Trend Line Chart
+      const trendChart = document.querySelector('[ref="costTrendChart"]')
+      if (trendChart) {
+        const ctx3 = trendChart.getContext('2d')
+        charts.costTrend = new Chart(ctx3, {
+          type: 'line',
+          data: {
+            labels: awsProject.charts.costTrend.labels,
+            datasets: [{
+              data: awsProject.charts.costTrend.data,
+              borderColor: '#a678ff',
+              backgroundColor: 'rgba(166, 120, 255, 0.1)',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#a678ff',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { display: false }, x: { display: false } }
+          }
+        })
+      }
+    }
+
+    // SCM Order Tracker Chart
+    const scmProject = projects.value.find(p => p.id === 'scm-order-tracker')
+    if (scmProject?.charts) {
+      const scmChartElement = document.querySelector('[ref="scmChart"]')
+      if (scmChartElement) {
+        const ctx4 = scmChartElement.getContext('2d')
+        charts.scm = new Chart(ctx4, {
+          type: 'doughnut',
+          data: {
+            labels: scmProject.charts.deliveryStatus.labels,
+            datasets: [{
+              data: scmProject.charts.deliveryStatus.data,
+              backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+              borderWidth: 0,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            cutout: '60%'
+          }
+        })
+      }
+    }
+  } catch (error) {
+    console.error('Error initializing charts:', error)
+  }
+}
+
+// Initialize charts after component mounts
+onMounted(async () => {
+  await nextTick()
+  setTimeout(() => {
+    initializeCharts()
+  }, 100)
+})
+
+const initializeCharts = () => {
+  try {
   // Cost by Service Pie Chart
   if (costByServiceChart.value) {
     const ctx1 = costByServiceChart.value.getContext('2d')
@@ -560,7 +830,7 @@ const initializeCharts = () => {
   }
 
   // SCM Order Tracker Chart
-  if (scmChart.value) {
+  if (scmChart.value && projects.value.length > 3 && projects.value[3].charts) {
     const ctx4 = scmChart.value.getContext('2d')
     charts.scm = new Chart(ctx4, {
       type: 'doughnut',
@@ -589,6 +859,9 @@ const initializeCharts = () => {
         cutout: '60%'
       }
     })
+  }
+  } catch (error) {
+    console.error('Error initializing charts:', error)
   }
 }
 

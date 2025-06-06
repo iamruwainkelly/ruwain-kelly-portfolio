@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen bg-dark-bg text-white">
-    <!-- Header Spacing Fix - Push content below navbar -->
-    <div class="pt-24 px-6 pb-6">
+    <!-- Header Spacing Fix - Push content below navbar with extra padding -->
+    <div class="pt-28 px-6 pb-6">
       <!-- Demo Mode Banner -->
-      <div class="bg-gradient-to-r from-orange-500 to-purple-600 p-4 rounded-xl mb-8 text-center backdrop-blur-sm border border-orange-500/20">
+      <div class="bg-gradient-to-r from-orange-500 to-purple-600 p-4 rounded-xl mb-8 text-center backdrop-blur-sm border border-orange-500/20 sticky top-20 z-40">
         <p class="font-semibold text-lg">🚛 DEMO: German/European Logistics Tracking - Portfolio Demonstration Only</p>
       </div>
 
@@ -63,7 +63,7 @@
           <!-- Delivery Status Chart -->
           <div class="bg-dark-surface/60 backdrop-blur-md border border-dark-border rounded-xl p-6 hover:border-orange-500/50 transition-all">
             <h3 class="text-lg font-semibold mb-4 text-orange-400">📉 Delivery Status Distribution</h3>
-            <div class="w-full h-64 flex items-center justify-center">
+            <div class="w-full lg:w-1/2 mx-auto h-64 max-h-96 flex items-center justify-center">
               <canvas ref="deliveryChart" class="max-w-full max-h-full"></canvas>
             </div>
           </div>
@@ -71,7 +71,7 @@
           <!-- Risk Factors Chart -->
           <div class="bg-dark-surface/60 backdrop-blur-md border border-dark-border rounded-xl p-6 hover:border-purple-500/50 transition-all">
             <h3 class="text-lg font-semibold mb-4 text-purple-400">📈 Risk Factor Analysis</h3>
-            <div class="w-full h-64 flex items-center justify-center">
+            <div class="w-full lg:w-1/2 mx-auto h-64 max-h-96 flex items-center justify-center">
               <canvas ref="riskChart" class="max-w-full max-h-full"></canvas>
             </div>
           </div>
@@ -121,10 +121,15 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap gap-4 justify-center mb-8">
+        <button @click="updateOrderStatus" 
+                class="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center">
+          <span class="mr-2">🔄</span>
+          Update Order Status
+        </button>
         <button @click="generateReport" 
                 class="px-6 py-3 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center">
           <span class="mr-2">📄</span>
-          Generate PDF Report
+          Generate Report
         </button>
         <button @click="exportCSV" 
                 class="px-6 py-3 bg-dark-surface border border-dark-border text-white rounded-xl hover:border-orange-500 transition-all duration-300 flex items-center">
@@ -399,5 +404,44 @@ function addNewActivity() {
 
 function showOrderDetails(order) {
   selectedOrder.value = order
+}
+
+function updateOrderStatus() {
+  // Simulate updating order statuses based on real-time logistics data
+  const updatedOrders = displayedOrders.value.map(order => {
+    if (Math.random() > 0.7) { // 30% chance of status update per order
+      const statuses = ['on_track', 'at_risk', 'delayed']
+      const newStatus = statuses[Math.floor(Math.random() * statuses.length)]
+      
+      if (order.status !== newStatus) {
+        order.status = newStatus
+        order.riskScore = Math.random() * 10
+        order.lastUpdate = 'Just now'
+        
+        // Add activity for this update
+        activities.value.unshift({
+          id: Date.now() + Math.random(),
+          type: 'status_update',
+          orderId: order.id,
+          message: `📦 Order ${order.id} status updated to ${newStatus.replace('_', ' ')} via automated monitoring`,
+          timestamp: new Date().toLocaleTimeString('de-DE'),
+          severity: newStatus === 'delayed' ? 'high' : newStatus === 'at_risk' ? 'medium' : 'low'
+        })
+      }
+    }
+    return order
+  })
+  
+  displayedOrders.value = updatedOrders
+  updateStats()
+  updateSyncTime()
+  
+  // Keep only last 15 activities
+  if (activities.value.length > 15) {
+    activities.value = activities.value.slice(0, 15)
+  }
+  
+  // Show confirmation
+  alert('🔄 Order Status Update Complete!\n\nDemo feature: Real-time status updates applied to shipments based on carrier APIs, weather data, and traffic conditions.')
 }
 </script>
