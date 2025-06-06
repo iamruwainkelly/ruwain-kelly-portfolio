@@ -11,12 +11,11 @@
       <section class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto text-center">
           <h1 class="text-4xl lg:text-6xl font-bold mb-6 gradient-text animate-fade-in-up">
-            The Journey from People to Platforms
+            Senior SCM & ERP Engineer
           </h1>
           <p class="text-xl lg:text-2xl text-light-text max-w-4xl mx-auto leading-relaxed animate-fade-in-up" 
              style="animation-delay: 0.2s;">
-            How 15 years of managing global teams taught me to architect technology 
-            that transforms enterprises—one intelligent system at a time.
+            AI Backend Architect | Digital Transformation Specialist
           </p>
         </div>
       </section>
@@ -25,40 +24,10 @@
       <section class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
           <div class="glass-card p-8 lg:p-12 animate-fade-in-up" style="animation-delay: 0.4s;">
-            <h2 class="text-3xl font-bold mb-8 gradient-text">From Operations Leadership to Technical Architecture</h2>
+            <h2 class="text-3xl font-bold mb-8 gradient-text">Building Real Systems That Solve Business Pain</h2>
             <div class="space-y-8 text-light-text text-lg leading-relaxed">
               <p>
-                My story doesn't begin with code—it begins with people. For over a decade, I led operations teams 
-                across Europe and Africa, managing complex supply chains for manufacturing giants. Every day, 
-                I watched brilliant people struggle with systems that couldn't keep pace with business reality.
-              </p>
-              
-              <p>
-                The turning point came during a particularly challenging SAP migration in our European operations. 
-                While watching our procurement team manually reconcile thousands of purchase orders because the 
-                system couldn't handle our multi-currency, multi-vendor workflows, I realized something profound: 
-                <strong class="text-primary-orange">the gap between business operations and technology wasn't 
-                just about features—it was about understanding.</strong>
-              </p>
-              
-              <p>
-                That's when I made a deliberate pivot. I didn't abandon my operations expertise; I weaponized it. 
-                I dove deep into backend development, cloud architecture, and enterprise integration patterns. 
-                But unlike traditional developers, I came to the code with battle scars from real procurement 
-                disasters, inventory nightmares, and vendor management chaos.
-              </p>
-              
-              <p>
-                This unique perspective—understanding both the boardroom and the server room—became my superpower. 
-                I could translate C-suite strategic requirements into scalable technical architectures because 
-                I'd lived through the operational consequences of poor system design.
-              </p>
-              
-              <p>
-                Today, when I architect a serverless cost monitoring dashboard or design a Terraform-based 
-                infrastructure suite, I'm not just solving technical challenges. I'm eliminating the frustrations 
-                I witnessed in procurement departments, the inefficiencies I tracked in warehouse operations, 
-                and the scalability nightmares I inherited from legacy ERP implementations.
+                I'm a product-focused SCM & ERP systems engineer with 15+ years architecting and delivering AI-driven backend and logistics platforms across Africa and the EU. I don't just build solutions—I've managed manufacturing plants, directed warehouse operations across Southern Africa, and led procurement teams handling 100,000+ SKUs. This hands-on operational experience is what sets my technical work apart. When I architect a Python-based forecasting engine or design a real-time Tableau dashboard, I'm solving problems I've lived through firsthand. I specialize in turning operational complexity into fast, scalable code—replacing spreadsheets with real-time dashboards, automating workflows with Python and Node.js, and integrating AI forecasting directly into procurement and warehouse systems. My approach blends hands-on technical delivery with commercial impact: every solution is measurable, secure, and built for global scale. Whether it's deploying GDPR-compliant cloud infrastructure managing live warehouse environments, building ETL pipelines that cut reporting lag by 40%, or implementing AI engines that reduce understock risk, I bridge the gap between business needs and technical solutions. I've delivered full-stack backend systems for ERP, WMS, and procurement using Python, FastAPI, SQL, and AWS, trained logistics teams across Germany, Netherlands, and South Africa on system adoption, and consistently achieved measurable outcomes like 22% improved fulfillment performance and 20% warehouse efficiency gains. My work spans SAP, SAGE, SYSPRO integration with modern Python and Node backends, always focused on automation, data-driven decision making, and scalable architecture that transforms how organizations operate.
               </p>
             </div>
           </div>
@@ -69,14 +38,28 @@
       <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-dark-surface">
         <div class="max-w-6xl mx-auto">
           <div class="glass-card p-8 lg:p-12 animate-fade-in-up" style="animation-delay: 0.6s;">
-            <h2 class="text-3xl font-bold mb-8 text-primary-orange">Strategic Profile</h2>
-            <p class="text-light-text text-lg leading-relaxed">
-              Multi-disciplinary leader bridging supply chain operations, ERP architecture, and cloud-native development. 
+            <h2 class="text-3xl font-bold mb-8 text-primary-orange">Ready to Transform Your Operations?</h2>
+            <p class="text-light-text text-lg leading-relaxed mb-8">
+              Multi-disciplinary engineer bridging supply chain operations, ERP architecture, and cloud-native development. 
               I specialize in digitizing procurement workflows, automating warehouse operations, and creating seamless 
               integrations between legacy ERP systems and modern cloud platforms. With 15+ years of hands-on delivery 
               across SAP, SYSPRO, SAGE, and AWS ecosystems, I architect solutions that don't just work—they transform 
-              how organizations operate at scale.
+              how organizations operate at scale. Whether you need AI-powered forecasting engines, real-time inventory 
+              dashboards, or full ERP-to-cloud migrations, I deliver measurable results: 40% faster reporting, 22% improved 
+              fulfillment, 20% warehouse efficiency gains. Let's discuss how I can help solve your operational complexity 
+              with intelligent, scalable technology.
             </p>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+              <a href="mailto:iamruwainkelly@gmail.com" 
+                 class="bg-gradient-primary hover:bg-gradient-secondary text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                Start a Conversation
+              </a>
+              <a href="/contact" 
+                 class="border-2 border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                View Projects
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -108,7 +91,7 @@
               <div class="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                 <CloudIcon class="w-6 h-6 text-white" />
               </div>
-              <h3 class="text-xl font-bold mb-4 text-primary-orange">Backend & Cloud</h3>
+              <h3 class="text-xl font-bold mb-4 text-primary-orange">Backend & Data</h3>
               <div class="flex flex-wrap gap-2">
                 <span v-for="skill in backendSkills" :key="skill" 
                       class="px-3 py-1 text-sm bg-dark-surface text-light-text rounded-full border border-primary-orange/30 hover:border-primary-orange transition-colors duration-300">
@@ -117,28 +100,28 @@
               </div>
             </div>
 
-            <!-- Frontend & UX -->
+            <!-- Cloud & Infrastructure -->
             <div class="glass-card p-6">
               <div class="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                 <DevicePhoneMobileIcon class="w-6 h-6 text-white" />
               </div>
-              <h3 class="text-xl font-bold mb-4 text-primary-orange">Frontend & UX</h3>
+              <h3 class="text-xl font-bold mb-4 text-primary-orange">Cloud & Infrastructure</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="skill in frontendSkills" :key="skill" 
+                <span v-for="skill in cloudSkills" :key="skill" 
                       class="px-3 py-1 text-sm bg-dark-surface text-light-text rounded-full border border-primary-orange/30 hover:border-primary-orange transition-colors duration-300">
                   {{ skill }}
                 </span>
               </div>
             </div>
 
-            <!-- DevOps & Ops -->
+            <!-- Analytics & AI -->
             <div class="glass-card p-6">
               <div class="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                 <CogIcon class="w-6 h-6 text-white" />
               </div>
-              <h3 class="text-xl font-bold mb-4 text-primary-orange">DevOps & Ops</h3>
+              <h3 class="text-xl font-bold mb-4 text-primary-orange">Analytics & AI</h3>
               <div class="flex flex-wrap gap-2">
-                <span v-for="skill in devopsSkills" :key="skill" 
+                <span v-for="skill in analyticsSkills" :key="skill" 
                       class="px-3 py-1 text-sm bg-dark-surface text-light-text rounded-full border border-primary-orange/30 hover:border-primary-orange transition-colors duration-300">
                   {{ skill }}
                 </span>
@@ -152,48 +135,30 @@
       <section class="py-16 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
           <div class="glass-card p-8 lg:p-12 text-center animate-fade-in-up" style="animation-delay: 1.2s;">
-            <h2 class="text-3xl font-bold mb-6 gradient-text">Signature Impact</h2>
+            <h2 class="text-3xl font-bold mb-6 gradient-text">Proven Impact</h2>
             <div class="grid md:grid-cols-3 gap-8 mb-8">
               <div class="text-center">
-                <div class="text-3xl font-bold gradient-text mb-2">50+</div>
-                <div class="text-light-text">Enterprise Solutions</div>
+                <div class="text-3xl font-bold gradient-text mb-2">40%</div>
+                <div class="text-light-text">Faster Reporting via ETL</div>
               </div>
               <div class="text-center">
-                <div class="text-3xl font-bold gradient-text mb-2">EU/Africa</div>
-                <div class="text-light-text">Global Transformation</div>
+                <div class="text-3xl font-bold gradient-text mb-2">22%</div>
+                <div class="text-light-text">Fulfillment Improvement</div>
               </div>
               <div class="text-center">
                 <div class="text-3xl font-bold gradient-text mb-2">100K+</div>
-                <div class="text-light-text">SKUs Managed</div>
+                <div class="text-light-text">SKUs Managed Live</div>
               </div>
             </div>
             <p class="text-light-text text-lg mb-8">
-              From modernizing legacy procurement systems to architecting cloud-native supply chain platforms, 
-              I've delivered solutions that process millions of transactions, manage complex inventory flows, 
-              and enable real-time operational intelligence across global enterprises.
+              From automating procurement workflows to deploying AI forecasting engines, 
+              I've delivered solutions that process real transactions, manage complex inventory flows, 
+              and enable data-driven operational intelligence across global enterprises in manufacturing, 
+              logistics, and supply chain sectors.
             </p>
             <router-link to="/projects" class="btn-secondary inline-flex items-center gap-2">
               <BoltIcon class="w-5 h-5" />
-              Explore My Work
-            </router-link>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA Section -->
-      <section class="py-20 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto text-center">
-          <div class="glass-card p-12 animate-fade-in-up" style="animation-delay: 1.4s;">
-            <h2 class="text-4xl font-bold mb-6 gradient-text">
-              Let's Transform Together
-            </h2>
-            <p class="text-light-text text-lg mb-8 max-w-2xl mx-auto">
-              Ready to bridge the gap between operational excellence and technological innovation? 
-              Let's architect solutions that don't just work—they transform how your business operates.
-            </p>
-            <router-link to="/contact" class="btn-primary inline-flex items-center gap-2 text-lg px-8 py-4">
-              <ChatBubbleLeftRightIcon class="w-6 h-6" />
-              Start the Conversation
+              View Technical Projects
             </router-link>
           </div>
         </div>
@@ -215,23 +180,23 @@ import {
 
 // Skills data
 const erpSkills = ref([
-  'SAP', 'SAGE', 'SYSPRO', 'Oracle ERP', 'Supply Chain', 'Procurement', 
-  'Inventory Mgmt', 'Logistics', 'Warehouse Ops', 'ERP Integration'
+  'SAP S/4HANA', 'SAGE', 'SYSPRO', 'ERP Migration', 'Supply Chain', 'Procurement',
+  'WMS/TMS', 'Inventory Mgmt', 'Warehouse Ops', 'P&L Management'
 ])
 
 const backendSkills = ref([
-  'Python', 'FastAPI', 'Node.js', 'Java', 'PostgreSQL', 'MongoDB', 
-  'Redis', 'AWS', 'Docker', 'Microservices'
+  'Python', 'FastAPI', 'Flask', 'Node.js', 'SQL', 'Pandas', 
+  'JavaScript', 'Java', 'ETL Pipelines', 'REST APIs'
 ])
 
-const frontendSkills = ref([
-  'Vue.js', 'React', 'TypeScript', 'JavaScript', 'Tailwind CSS', 
-  'Responsive Design', 'UX/UI', 'Progressive Web Apps'
+const cloudSkills = ref([
+  'AWS Lambda', 'EC2', 'S3', 'RDS', 'IAM', 'Docker', 
+  'GitHub Actions', 'CI/CD', 'GCP', 'Azure'
 ])
 
-const devopsSkills = ref([
-  'Terraform', 'CI/CD', 'Kubernetes', 'AWS Lambda', 'CloudFormation', 
-  'Git', 'Lean Six Sigma', 'Agile/Scrum', 'GDPR Compliance'
+const analyticsSkills = ref([
+  'Tableau', 'scikit-learn', 'AI Forecasting', 'Data Automation', 
+  'KPI Dashboards', 'Real-time Analytics', 'Business Intelligence', 'GDPR Compliance'
 ])
 </script>
 
