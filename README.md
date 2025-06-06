@@ -4,21 +4,21 @@ A production-grade, full-featured personal portfolio site that blends modern des
 
 ---
 
-## 🚀 Live Preview
+## Live Preview
 
-**🌐 Deployed at:** [https://iamruwainkelly.vercel.app](https://iamruwainkelly.vercel.app)  
-**🎯 GitHub:** [iamruwainkelly](https://github.com/iamruwainkelly)
+**Deployed at:** [https://iamruwainkelly.vercel.app](https://iamruwainkelly.vercel.app)  
+**GitHub:** [iamruwainkelly](https://github.com/iamruwainkelly)
 
 ---
 
-## 🧠 Key Highlights
+## Key Highlights
 
-- ⚙️ **Live Terraform Integration:** Visual frontend tied to a secure Node.js backend running real Terraform plans (or mocked for demo)
-- 💰 **AWS Cost Intelligence Tool:** Estimate AWS cloud costs with responsive UI and sliders
-- 🔥 **AWS Serverless Dashboard:** Live AWS integration with Lambda, API Gateway, DynamoDB monitoring (demo mode available)
-- 📂 **Project Detail Pages:** Real projects with architecture, stack, features, and interactive charts
-- 📱 **Fully Responsive:** Optimised for mobile, tablet, and large screens
-- 🌗 **Dark UI:** Modern gradient themes and glassmorphism effects
+- **Live Terraform Integration:** Visual frontend tied to a secure Node.js backend running real Terraform plans (or mocked for demo)
+- **AWS Cost Intelligence Tool:** Estimate AWS cloud costs with responsive UI and sliders
+- **AWS Serverless Dashboard:** Live AWS integration with Lambda, API Gateway, DynamoDB monitoring (demo mode available)
+- **Project Detail Pages:** Real projects with architecture, stack, features, and interactive charts
+- **Fully Responsive:** Optimised for mobile, tablet, and large screens
+- **Dark UI:** Modern gradient themes and glassmorphism effects
 
 ---
 
@@ -59,7 +59,7 @@ npm install
 npm run dev
 
 
-## 🌍 Routes & Pages
+## Routes & Pages
 
 | Route                     | Description                                    |
 |---------------------------|------------------------------------------------|
@@ -70,7 +70,7 @@ npm run dev
 | `/aws-serverless`         | Live AWS monitoring dashboard (demo/live mode)|
 | `/projects/:id`           | Project details with architecture, features   |
 
-## 🚀 AWS Integration Features
+## AWS Integration Features
 
 ### **AWS Serverless Dashboard** (`/aws-serverless`)
 - **Demo Mode**: Realistic mock AWS data (works out-of-the-box)
@@ -79,11 +79,11 @@ npm run dev
 - **Setup**: See [AWS_INTEGRATION_SETUP.md](./AWS_INTEGRATION_SETUP.md) for configuration
 
 
-🧠 Author
+Author
 
 RUWΔIN KΞLLY
-Cloud | Backend | Logistics | AI
-📫 info@ruwainkelly.com
+Senior SCM & ERP Engineer | AI Backend Architect | Digital Transformation
+📫 admin@ruwainkelly.com
 🔗 LinkedIn: www.linkedin.com/in/mr-r
 
 
