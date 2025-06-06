@@ -13,7 +13,7 @@
                 Enterprise Technologist & SCM Leader
               </h2>
               <p class="text-light-text text-lg leading-relaxed mb-6">
-                15+ years transforming global supply chains through intelligent ERP systems and cloud architecture. 
+                15+ years transforming global supply chains through intelligent ERP systems and backend architecture. 
                 I don't just code—I architect platforms that scale across continents, optimize procurement workflows, 
                 and deliver measurable operational impact for manufacturing and logistics enterprises.
               </p>
@@ -122,7 +122,7 @@
             Ready to Lead Your SCM & ERP Transformation?
           </h2>
           <p class="text-light-text text-lg mb-8 max-w-2xl mx-auto">
-            From SAP integrations to cloud-native supply chain platforms, let's architect solutions that 
+            From SAP integrations to modern supply chain platforms, let's architect solutions that 
             scale globally and deliver measurable operational impact for your enterprise.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">

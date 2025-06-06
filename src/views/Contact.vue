@@ -253,7 +253,7 @@
         <div class="glass-card p-8 text-center">
           <h2 class="text-2xl font-bold mb-4 gradient-text">Stay Updated</h2>
           <p class="text-light-text mb-6 max-w-2xl mx-auto">
-            Get tactical tech & ops strategies in your inbox. No spam, just actionable insights on cloud architecture, ERP optimization, and modern backend development.
+            Get tactical tech & ops strategies in your inbox. No spam, just actionable insights on enterprise architecture, ERP optimization, and modern backend development.
           </p>
           <form @submit.prevent="subscribeNewsletter" class="max-w-md mx-auto flex gap-4">
             <input 

@@ -40,7 +40,7 @@
           <div class="glass-card p-8 lg:p-12 animate-fade-in-up" style="animation-delay: 0.6s;">
             <h2 class="text-3xl font-bold mb-8 text-primary-orange">Ready to Transform Your Operations?</h2>
             <p class="text-light-text text-lg leading-relaxed mb-8">
-              Multi-disciplinary engineer bridging supply chain operations, ERP architecture, and cloud-native development. 
+              Multi-disciplinary engineer bridging supply chain operations, ERP architecture, and backend development. 
               I specialize in digitizing procurement workflows, automating warehouse operations, and creating seamless 
               integrations between legacy ERP systems and modern cloud platforms. With 15+ years of hands-on delivery 
               across SAP, SYSPRO, SAGE, and AWS ecosystems, I architect solutions that don't just work—they transform 

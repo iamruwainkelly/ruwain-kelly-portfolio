@@ -105,7 +105,7 @@
           </h3>
           
           <p class="text-base text-light-text leading-relaxed">
-            Multi-disciplinary leader in Supply Chain, Logistics, and ERP Ops with deep backend and infrastructure engineering experience. I specialise in digitising procurement, automating warehouse flows, and integrating ERP platforms with cloud-native systems. With 15+ years of delivery across SAP, SYSPRO, SAGE, and AWS, I architect platforms that scale globally and deliver measurable operational impact.
+            Multi-disciplinary leader in Supply Chain, Logistics, and ERP Ops with deep backend and infrastructure engineering experience. I specialise in digitising procurement, automating warehouse flows, and integrating ERP platforms with modern backend systems. With 15+ years of delivery across SAP, SYSPRO, SAGE, and AWS, I architect platforms that scale globally and deliver measurable operational impact.
           </p>
         </div>
       </section>
@@ -115,7 +115,7 @@
         <div class="glass-card p-8 text-center">
           <h3 class="text-2xl font-bold mb-4 gradient-text">Ready to Lead Your SCM & ERP Transformation?</h3>
           <p class="text-light-text mb-6">
-            From SAP migrations to cloud-native supply chain platforms, I architect enterprise solutions that 
+            From SAP migrations to modern supply chain platforms, I architect enterprise solutions that 
             scale globally and deliver measurable operational impact. Let's transform your operations—together.
           </p>
           <router-link to="/contact" class="btn-primary">
