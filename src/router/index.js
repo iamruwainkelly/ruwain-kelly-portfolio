@@ -7,6 +7,7 @@ import ProjectDetail from '../views/ProjectDetail.vue'
 import TerraformDemo from '../views/TerraformDemo.vue'
 import AWSCalculator from '../views/AWSCalculator.vue'
 import AWSServerless from '../views/AWSServerless.vue'
+import SCMDashboard from '../projects/scm-order-tracker/pages/SCMDashboard.vue'
 
 const routes = [
   {
@@ -52,6 +53,12 @@ const routes = [
     name: 'AWSServerless',
     component: AWSServerless,
     meta: { title: 'AWS Serverless Dashboard - RUWΔIN KΞLLY' }
+  },
+  {
+    path: '/scm-order-tracker',
+    name: 'SCMOrderTracker',
+    component: SCMDashboard,
+    meta: { title: 'SCM Order Tracker - RUWΔIN KΞLLY' }
   },
   // Project Detail Routes (accessed from Projects page)
   {

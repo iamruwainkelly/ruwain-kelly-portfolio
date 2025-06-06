@@ -77,5 +77,45 @@
       "users": 89,
       "accuracy": "94%"
     }
+  },
+  {
+    "id": "scm-order-tracker",
+    "title": "Supply Chain Order Tracker",
+    "subtitle": "Real-time order tracking with risk prediction and delay alerts",
+    "description": "Live supply chain monitoring dashboard with predictive delay analysis, risk assessment, and real-time order status updates across warehouses and carriers.",
+    "longDescription": "A comprehensive supply chain management dashboard that provides real-time order tracking, intelligent delay prediction, and risk assessment across multiple warehouses and carriers. Features include WebSocket-powered live updates, ML-based delay prediction algorithms, interactive route mapping, carrier performance analytics, and automated risk flagging. Built with modern web technologies to handle high-volume logistics operations with responsive mobile-first design.",
+    "techStack": ["Vue.js", "FastAPI", "WebSocket", "Chart.js", "Tailwind", "SQLite"],
+    "github": "https://github.com/iamruwainkelly/scm-order-tracker",
+    "liveDemo": "/projects/scm-order-tracker",
+    "category": ["Logistics", "Real-time"],
+    "technologies": ["Vue.js", "FastAPI", "WebSocket", "Chart.js", "Tailwind CSS", "SQLite", "Pinia"],
+    "icon": "truck",
+    "featured": true,
+    "mockData": {
+      "ordersTracked": "2,347",
+      "onTimeDelivery": "94.2%",
+      "activeCarriers": "23",
+      "riskFlags": "12 active"
+    },
+    "charts": {
+      "deliveryStatus": {
+        "labels": ["On Track", "At Risk", "Delayed", "Delivered"],
+        "data": [45, 15, 8, 32]
+      },
+      "carrierPerformance": {
+        "labels": ["DHL Express", "FedEx", "UPS", "Local Carriers"],
+        "data": [96, 94, 92, 87]
+      },
+      "riskFactors": {
+        "labels": ["Weather", "Traffic", "Warehouse", "Carrier Issues"],
+        "data": [25, 35, 20, 20]
+      }
+    },
+    "realTimeFeatures": {
+      "liveUpdates": true,
+      "riskPrediction": true,
+      "routeTracking": true,
+      "alertSystem": true
+    }
   }
 ]
