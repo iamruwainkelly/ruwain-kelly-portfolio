@@ -190,7 +190,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👨‍💻 Author
 
 **RUWΔIN KΞLLY**
-- Portfolio: [Live Site](https://ruwain-kelly-portfolio.vercel.app)
+- Portfolio: [Live Site](https://iamruwainkelly.vercel.app)
 - GitHub: [@iamruwainkelly](https://github.com/iamruwainkelly)
 - LinkedIn: [RUWΔIN KΞLLY](https://linkedin.com/in/ruwainkelly)
 
