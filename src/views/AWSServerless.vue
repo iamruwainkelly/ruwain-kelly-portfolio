@@ -399,7 +399,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   CloudIcon,
@@ -644,6 +644,22 @@ const loadData = async () => {
   }
 }
 
+// Chart cleanup function
+const destroyCharts = () => {
+  if (lambdaChartInstance) {
+    lambdaChartInstance.destroy()
+    lambdaChartInstance = null
+  }
+  if (costChartInstance) {
+    costChartInstance.destroy()
+    costChartInstance = null
+  }
+  if (environmentChartInstance) {
+    environmentChartInstance.destroy()
+    environmentChartInstance = null
+  }
+}
+
 // Chart initialization
 const initCharts = () => {
   // Lambda Invocations Chart
@@ -846,7 +862,12 @@ const checkAWSConfiguration = () => {
 // Watch for view changes to initialize charts
 watch(() => currentView.value, () => {
   if (currentView.value === 'summary') {
+    // Destroy existing charts before recreating
+    destroyCharts()
     setTimeout(initCharts, 100)
+  } else {
+    // Destroy charts when leaving summary view to prevent memory leaks
+    destroyCharts()
   }
 }, { immediate: false })
 
@@ -877,6 +898,11 @@ onMounted(async () => {
   if (currentView.value === 'summary') {
     setTimeout(initCharts, 100)
   }
+})
+
+// Cleanup when component is unmounted
+onBeforeUnmount(() => {
+  destroyCharts()
 })
 </script>
 
