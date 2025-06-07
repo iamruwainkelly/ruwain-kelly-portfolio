@@ -9,7 +9,7 @@
         </h1>
         <p class="text-gray-300 text-lg max-w-3xl mx-auto">
           This is a live demonstration of the Terraform backend API integration with real AWS infrastructure automation. 
-          The backend is running on port 3003 and provides secure infrastructure automation capabilities including VPC, ECS, and RDS deployments.
+          The backend is deployed on Railway cloud infrastructure and provides secure infrastructure automation capabilities including VPC, ECS, and RDS deployments.
         </p>
       </div>
 
@@ -32,15 +32,16 @@
         
         <!-- Backend Setup Instructions -->
         <div v-if="connectionStatus.class === 'bg-red-500'" class="mt-4 bg-red-900/20 border border-red-500/30 rounded-lg p-4">
-          <h4 class="text-red-400 font-semibold mb-2">⚠️ Backend Not Running</h4>
+          <h4 class="text-red-400 font-semibold mb-2">⚠️ Backend Connection Issue</h4>
           <div class="text-sm text-gray-300 space-y-2">
-            <p>The Terraform backend API is not running. To start it:</p>
-            <ol class="list-decimal list-inside space-y-1 ml-4">
-              <li>Open terminal and navigate to the terraform-backend directory</li>
-              <li>Run: <code class="bg-gray-700 px-2 py-1 rounded">npm start</code></li>
-              <li>The backend will start on port 3003</li>
-              <li>Refresh this page and try again</li>
-            </ol>
+            <p>The Terraform backend API is experiencing connection issues. This could be due to:</p>
+            <ul class="list-disc list-inside space-y-1 ml-4">
+              <li>Temporary network connectivity issues</li>
+              <li>Backend service maintenance</li>
+              <li>Railway deployment cycling</li>
+              <li>CORS configuration issues</li>
+            </ul>
+            <p class="mt-2">Please try refreshing the page. The backend is hosted on Railway cloud infrastructure.</p>
           </div>
         </div>
         
@@ -219,28 +220,28 @@
         <h2 class="text-xl font-semibold text-white mb-4">API Resources & Examples</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <a 
-            href="http://localhost:3003/health" 
+            :href="`${API_BASE_URL}/health`" 
             target="_blank"
             class="block p-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-center"
           >
             Health Check
           </a>
           <a 
-            href="http://localhost:3003/status" 
+            :href="`${API_BASE_URL}/status`" 
             target="_blank"
             class="block p-4 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-center"
           >
             System Status
           </a>
           <a 
-            href="http://localhost:3003/api/docs" 
+            :href="`${API_BASE_URL}/api/docs`" 
             target="_blank"
             class="block p-4 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors text-center"
           >
             API Documentation
           </a>
           <a 
-            href="http://localhost:3003/examples/vue-integration.html" 
+            :href="`${API_BASE_URL}/examples/vue-integration.html`" 
             target="_blank"
             class="block p-4 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors text-center"
           >
@@ -269,7 +270,7 @@
                 <li>• JWT authentication system</li>
                 <li>• Docker sandboxing ready</li>
                 <li>• Real-time job tracking</li>
-                <li>• Running on port 3003</li>
+                <li>• Deployed on Railway cloud</li>
               </ul>
             </div>
           </div>
@@ -284,6 +285,8 @@ export default {
   name: 'TerraformDemo',
   data() {
     return {
+      // Production Backend API Base URL
+      API_BASE_URL: 'https://terraform-backend-demo-production.up.railway.app',
       loading: false,
       authToken: null,
       connectionStatus: {
@@ -337,7 +340,7 @@ export default {
     async checkConnection() {
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3003/status')
+        const response = await fetch(`${this.API_BASE_URL}/status`)
         if (response.ok) {
           const data = await response.json()
           this.systemInfo = data
@@ -362,7 +365,7 @@ export default {
     async authenticate() {
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3003/auth/login', {
+        const response = await fetch(`${this.API_BASE_URL}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -414,7 +417,7 @@ export default {
       const terraformConfig = this.getTerraformConfig(this.selectedTemplate)
 
       try {
-        const response = await fetch(`http://localhost:3003/terraform/${operation}`, {
+        const response = await fetch(`${this.API_BASE_URL}/terraform/${operation}`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${this.authToken}`,
@@ -468,7 +471,7 @@ export default {
       
       this.loading = true
       try {
-        const response = await fetch('http://localhost:3003/terraform/jobs', {
+        const response = await fetch(`${this.API_BASE_URL}/terraform/jobs`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${this.authToken}`,
