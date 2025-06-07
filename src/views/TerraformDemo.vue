@@ -30,6 +30,20 @@
           </button>
         </div>
         
+        <!-- Backend Setup Instructions -->
+        <div v-if="connectionStatus.class === 'bg-red-500'" class="mt-4 bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+          <h4 class="text-red-400 font-semibold mb-2">⚠️ Backend Not Running</h4>
+          <div class="text-sm text-gray-300 space-y-2">
+            <p>The Terraform backend API is not running. To start it:</p>
+            <ol class="list-decimal list-inside space-y-1 ml-4">
+              <li>Open terminal and navigate to the terraform-backend directory</li>
+              <li>Run: <code class="bg-gray-700 px-2 py-1 rounded">npm start</code></li>
+              <li>The backend will start on port 3003</li>
+              <li>Refresh this page and try again</li>
+            </ol>
+          </div>
+        </div>
+        
         <!-- System Info -->
         <div v-if="systemInfo" class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="bg-gray-700 p-3 rounded">
@@ -51,6 +65,13 @@
       <div class="bg-gray-800 rounded-lg p-6 mb-8">
         <h2 class="text-xl font-semibold text-white mb-4">Authentication</h2>
         <div v-if="!authToken" class="space-y-4">
+          <div class="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4 mb-4">
+            <h4 class="text-blue-400 font-semibold mb-2">🔐 Demo Credentials</h4>
+            <div class="text-sm text-gray-300 space-y-1">
+              <p><strong>Username:</strong> admin</p>
+              <p><strong>Password:</strong> Admin123!@</p>
+            </div>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input 
               v-model="credentials.username" 
@@ -272,7 +293,7 @@ export default {
       systemInfo: null,
       credentials: {
         username: 'admin',
-        password: ''
+        password: 'Admin123!@'
       },
       operationResult: null,
       jobs: null,
