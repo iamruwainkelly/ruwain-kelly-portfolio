@@ -4,7 +4,7 @@
     "title": "Serverless Cost Intelligence Dashboard",
     "subtitle": "AI-powered cloud cost optimization with real-time forecasting and intelligent alerts",
     "description": "Enterprise-grade cost intelligence platform that monitors AWS Lambda, API Gateway, and DynamoDB with ML-powered forecasting, automated alert rules, and predictive cost optimization. I architected and implemented the serverless pipeline using AWS Lambda, API Gateway, and DynamoDB, including cost logic and user auth.",
-    "role": "Cloud Architect"
+    "role": "Cloud Architect",
     "longDescription": "A comprehensive serverless cost intelligence platform built with AWS Lambda, API Gateway, and DynamoDB. Features include real-time cost monitoring, predictive forecasting using machine learning algorithms, customizable alert rules with automated notifications, user authentication via Auth0, and interactive visualizations with Chart.js. The dashboard provides actionable insights for cost optimization and budget management across enterprise serverless architectures, delivering measurable cost savings through intelligent automation.",
     "techStack": ["AWS", "Lambda", "API Gateway", "DynamoDB", "Chart.js", "Tailwind"],
     "github": "https://github.com/iamruwainkelly/aws-serverless-dashboard",
@@ -39,7 +39,7 @@
     "title": "Terraform AWS Infrastructure Suite",
     "subtitle": "Enterprise-grade Infrastructure-as-Code for scalable cloud deployments",
     "description": "Production-hardened Terraform modules for VPC, ECS, RDS, and CI/CD pipelines. Complete Infrastructure-as-Code solution with cost optimization and security best practices. I designed and deployed the full infrastructure architecture with automated CI/CD pipelines.",
-    "role": "DevOps Engineer"
+    "role": "DevOps Engineer",
     "longDescription": "A comprehensive Terraform-based infrastructure suite designed for enterprise-scale AWS deployments. Includes modular templates for VPC networking, ECS container orchestration, RDS database management, and automated CI/CD pipelines. Features include automated cost estimation, security best practices implementation, comprehensive monitoring with CloudWatch, and intelligent auto-scaling policies. All modules are production-tested, security-hardened, and Terraform Registry ready for enterprise adoption.",
     "techStack": ["Terraform", "AWS", "ECS", "RDS", "VPC", "CI/CD", "CloudWatch"],
     "github": "https://github.com/iamruwainkelly/terraform-aws-vpc-ecs-rds-suite",
@@ -65,7 +65,7 @@
     "title": "AWS Cost Optimization Calculator",
     "subtitle": "Intelligent cost estimation with real-time pricing and optimization recommendations",
     "description": "Advanced cost calculation platform for AWS services with dynamic pricing analysis, intelligent optimization recommendations, and automated budget alerts across multiple regions. I built the complete frontend architecture and AWS API integration for real-time pricing calculations.",
-    "role": "Frontend Developer"
+    "role": "Frontend Developer",
     "longDescription": "An intelligent AWS cost calculator that provides real-time pricing estimates across multiple regions and services. Features include AI-powered cost optimization recommendations, automated budget alerts with predictive analysis, and detailed breakdown analysis for EC2, RDS, S3, and other AWS services. The platform helps enterprises optimize cloud spending through intelligent automation and data-driven insights.",
     "techStack": ["Vue.js", "Chart.js", "AWS API", "Node.js"],
     "github": "https://github.com/iamruwainkelly/aws-cost-calculator",
@@ -87,7 +87,7 @@
     "title": "SCM Order Tracker",
     "subtitle": "Real-time order tracking with risk prediction and delay alerts",
     "description": "Track supply chain orders across regions with real-time KPIs, charts, and risk alerts. I designed and built the full-stack application with FastAPI backend, WebSocket integration, and responsive dashboard UI.",
-    "role": "Full Stack Developer"
+    "role": "Full Stack Developer",
     "longDescription": "A comprehensive supply chain management dashboard that provides real-time order tracking, intelligent delay prediction, and risk assessment across multiple warehouses and carriers. Features include WebSocket-powered live updates, ML-based delay prediction algorithms, interactive route mapping, carrier performance analytics, and automated risk flagging. Built with modern web technologies to handle high-volume logistics operations with responsive mobile-first design.",
     "previewImage": "/assets/scm-tracker-preview.png",
     "techStack": ["Vue.js", "FastAPI", "WebSocket", "Chart.js", "Tailwind", "SQLite"],
