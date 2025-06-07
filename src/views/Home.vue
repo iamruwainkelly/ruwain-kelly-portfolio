@@ -232,21 +232,6 @@ const skills = ref([
 
 const featuredProjects = ref([])
 
-const techStack = ref([
-  { name: 'Python', category: 'Backend', icon: CodeBracketIcon },
-  { name: 'FastAPI', category: 'API', icon: CloudIcon },
-  { name: 'SAP', category: 'ERP', icon: CpuChipIcon },
-  { name: 'AWS', category: 'Cloud', icon: CloudIcon },
-  { name: 'Vue.js', category: 'Frontend', icon: CodeBracketIcon },
-  { name: 'Terraform', category: 'IaC', icon: CpuChipIcon },
-  { name: 'PostgreSQL', category: 'Database', icon: CloudIcon },
-  { name: 'Docker', category: 'DevOps', icon: CpuChipIcon },
-  { name: 'Kubernetes', category: 'Orchestration', icon: CloudIcon },
-  { name: 'Tableau', category: 'Analytics', icon: CodeBracketIcon },
-  { name: 'SAGE', category: 'ERP', icon: CpuChipIcon },
-  { name: 'Machine Learning', category: 'AI', icon: CodeBracketIcon }
-])
-
 onMounted(() => {
   // Get first 3 projects as featured
   featuredProjects.value = projectsData.slice(0, 3)
