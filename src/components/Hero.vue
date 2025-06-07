@@ -35,11 +35,11 @@
       
       <div class="space-y-4 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
         <p class="text-lg md:text-xl lg:text-2xl font-bold text-text-primary leading-tight">
-          Ops Leader | ERP & SCM Architect | Backend & Infra Engineer<br class="hidden sm:inline" />
-          <span class="block sm:inline"> | SAP • SAGE • SYSPRO • AWS • Python</span>
+          AI-Driven Supply Chain Architect & Backend Engineer<br class="hidden sm:inline" />
+          <span class="block sm:inline"> | SAP • SAGE • SYSPRO • AWS • Python • FastAPI</span>
         </p>
         <p class="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto">
-          Transforming supply chains & architecting enterprise solutions with 15+ years of global experience
+          Transforming global supply chains with intelligent ERP systems, modern backend architecture, and 15+ years of enterprise leadership across EU & Africa
         </p>
       </div>
 
