@@ -153,7 +153,12 @@
               </div>
 
               <!-- Project Info -->
-              <h2 class="text-2xl font-bold mb-3 gradient-text">{{ project.title }}</h2>
+              <div class="flex items-start justify-between mb-3">
+                <h2 class="text-2xl font-bold gradient-text">{{ project.title }}</h2>
+                <div v-if="project.role" class="role-badge">
+                  {{ project.role }}
+                </div>
+              </div>
               <p class="text-light-text mb-2">{{ project.subtitle }}</p>
               <p class="text-light-text mb-4">{{ project.description }}</p>
               
@@ -161,7 +166,7 @@
               <div class="flex flex-wrap gap-2 mb-6">
                 <span v-for="tag in (project.tags || project.technologies || [])" 
                       :key="tag" 
-                      class="tech-badge">{{ tag }}</span>
+                      class="tech-badge animated-tag">{{ tag }}</span>
               </div>
 
               <!-- Action Buttons -->
@@ -1302,6 +1307,100 @@ onUnmounted(cleanup)
   
   .scm-chart {
     height: 50px;
+  }
+}
+
+/* Role Badge Styles */
+.role-badge {
+  background: linear-gradient(135deg, #ff6c00, #ff8533);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 108, 0, 0.3);
+  border: 1px solid rgba(255, 108, 0, 0.4);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.role-badge:hover::before {
+  left: 100%;
+}
+
+/* Animated Tech Tags */
+.animated-tag {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.animated-tag::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.animated-tag:hover::before {
+  left: 100%;
+}
+
+/* Enhanced Project Card Hover Effects */
+.project-card:hover .role-badge {
+  box-shadow: 0 4px 12px rgba(255, 108, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.project-card:hover .animated-tag {
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Role Badge */
+@media (max-width: 768px) {
+  .role-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .role-badge {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+    position: relative;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  
+  .project-card .flex.items-start.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>
