@@ -23,10 +23,7 @@
     <div v-else class="min-h-screen bg-dark-bg text-white">
       <!-- Header Spacing Fix - Push content below navbar with extra padding -->
       <div class="pt-28 px-6 pb-6">
-        <!-- Demo Mode Banner -->
-        <div class="bg-gradient-to-r from-orange-500 to-purple-600 p-4 rounded-xl mb-8 text-center backdrop-blur-sm border border-orange-500/20 sticky top-20 z-40">
-          <p class="font-semibold text-lg">🚛 DEMO: German/European Logistics Tracking - Portfolio Demonstration Only</p>
-        </div>
+        <!-- Demo Mode Banner removed for production -->
 
       <!-- Header with KPIs -->
       <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
