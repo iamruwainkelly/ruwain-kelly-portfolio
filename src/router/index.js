@@ -9,6 +9,8 @@ import AWSCalculator from '../views/AWSCalculator.vue'
 import AWSServerless from '../views/AWSServerless.vue'
 import AIShipmentETA from '../views/AIShipmentETA.vue'
 import SCMDashboard from '../projects/scm-order-tracker/pages/SCMDashboard.vue'
+import AIShipmentETAWrapper from '../components/projects/AIShipmentETAWrapper.vue'
+import SCMOrderTrackerWrapper from '../components/projects/SCMOrderTrackerWrapper.vue'
 
 const routes = [
   {
@@ -58,13 +60,13 @@ const routes = [
   {
     path: '/scm-order-tracker',
     name: 'SCMOrderTracker',
-    component: SCMDashboard,
+    component: SCMOrderTrackerWrapper,
     meta: { title: 'SCM Order Tracker - RUWΔIN KΞLLY' }
   },
   {
     path: '/ai-shipment-eta',
     name: 'AIShipmentETA',
-    component: AIShipmentETA,
+    component: AIShipmentETAWrapper,
     meta: { title: 'AI Shipment ETA Predictor - RUWΔIN KΞLLY' }
   },
   // Project Detail Routes (accessed from Projects page)
