@@ -7,6 +7,7 @@ import ProjectDetail from '../views/ProjectDetail.vue'
 import TerraformDemo from '../views/TerraformDemo.vue'
 import AWSCalculator from '../views/AWSCalculator.vue'
 import AWSServerless from '../views/AWSServerless.vue'
+import AIShipmentETA from '../views/AIShipmentETA.vue'
 import SCMDashboard from '../projects/scm-order-tracker/pages/SCMDashboard.vue'
 
 const routes = [
@@ -59,6 +60,12 @@ const routes = [
     name: 'SCMOrderTracker',
     component: SCMDashboard,
     meta: { title: 'SCM Order Tracker - RUWΔIN KΞLLY' }
+  },
+  {
+    path: '/ai-shipment-eta',
+    name: 'AIShipmentETA',
+    component: AIShipmentETA,
+    meta: { title: 'AI Shipment ETA Predictor - RUWΔIN KΞLLY' }
   },
   // Project Detail Routes (accessed from Projects page)
   {
