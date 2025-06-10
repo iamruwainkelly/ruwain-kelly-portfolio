@@ -830,22 +830,6 @@ const initCharts = () => {
   }
 }
 
-// Cleanup charts
-const destroyCharts = () => {
-  if (lambdaChartInstance) {
-    lambdaChartInstance.destroy()
-    lambdaChartInstance = null
-  }
-  if (costChartInstance) {
-    costChartInstance.destroy()
-    costChartInstance = null
-  }
-  if (environmentChartInstance) {
-    environmentChartInstance.destroy()
-    environmentChartInstance = null
-  }
-}
-
 // Event handlers
 const refreshData = async () => {
   await loadData()
